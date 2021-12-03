@@ -1,0 +1,184 @@
+<div class="row">
+  <div class="col-xl-12">  
+    <nb-card size="large">
+      <nb-card-header>       
+        <span>Quiz Per Mata Pelajaran</span>
+      </nb-card-header>
+      <nb-card-body>      
+        <div class="row">
+          <div class="col-xl-6">
+            <nb-card size="large">
+              <nb-card-header>     
+                <div class="filter-area">                                            
+                  <div class="form-control-group">
+                    <label class="label">
+                      Filter By Month
+                    </label>
+                    <nb-select class="form-control" 
+                      placeholder="Filter By Month"
+                      [(ngModel)]="monthQuizLine"
+                      (ngModelChange)="getNilaiQuiz()"
+                      >
+                      <nb-option *ngFor="let item of month" value="{{ item.value }}">
+                        {{ item.name }}
+                      </nb-option>
+                    </nb-select>    
+                  </div>  
+                  <div class="form-control-group ml-3">
+                    <label class="label">
+                      Filter By Mata Pelajaran
+                    </label>
+                    <nb-select class="form-control" 
+                      placeholder="Filter By Mata Pelajaran"
+                      [(ngModel)]="matpelQuizLine"
+                      (ngModelChange)="getNilaiQuiz()">
+                      <nb-option *ngFor="let item of listMatpel" value="{{ item.nama_mata_pelajaran }}">
+                        {{ item.nama_mata_pelajaran }}
+                      </nb-option>
+                    </nb-select>    
+                  </div>
+                </div>  
+              </nb-card-header>
+              <nb-card-body>  
+                <div echarts [options]="optionNilaiQuiz" class="echart"></div>              
+              </nb-card-body>
+            </nb-card>              
+          </div>
+          <div class="col-xl-6">
+            <nb-card size="large">
+              <nb-card-header>     
+                <div class="filter-area">                                                              
+                  <div class="form-control-group with-icon">
+                    <label class="label">
+                      Filter By Tanggal 
+                    </label>
+                    <input nbInput
+                      fullWidth
+                      name="range"
+                      placeholder="Filter By Tanggal"
+                      fieldSize="large"
+                      [nbDatepicker]="formpicker"
+                      [(ngModel)]="tanggalQuizTable"
+                      (ngModelChange)="getQuizPerMatpel()"
+                    >    
+                    <nb-rangepicker #formpicker></nb-rangepicker>   
+                    <nb-icon icon="calendar-outline"></nb-icon>
+                  </div>
+                  <div class="form-control-group ml-3">
+                    <label class="label">
+                      Filter By Mata Pelajaran
+                    </label>
+                    <nb-select class="form-control" 
+                      placeholder="Filter By Mata Pelajaran"
+                      [(ngModel)]="matpelQuizTable"
+                      (ngModelChange)="getQuizPerMatpel()">
+                      <nb-option *ngFor="let item of listMatpel" value="{{ item.nama_mata_pelajaran }}">
+                        {{ item.nama_mata_pelajaran }}
+                      </nb-option>
+                    </nb-select>    
+                  </div>
+                </div>  
+              </nb-card-header>
+              <nb-card-body>  
+                <div class="table-wrapper">
+                  <table class="table table-striped">
+                    <thead>
+                      <th width="20%">Tanggal</th>
+                      <th>Topik</th>
+                      <th>Pengajar</th>
+                      <th>Benar</th>
+                      <th>Salah</th>
+                      <th>Jumlah Soal</th>
+                      <th>Nilai</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="listQuizPerMatpel.length == 0">
+                        <td colspan="7" class="text-center">
+                          Data tidak di temukan
+                        </td>
+                      </tr>                  
+                      <tr *ngFor="let item of listQuizPerMatpel">
+                        <td>
+                          {{item.tanggal | date:'d MMM, y, h:mm:ss a'}}
+                        </td>
+                        <td>{{ item.topik}}</td>
+                        <td>{{ item.guru}}</td>
+                        <td>{{ item.benar}}</td>
+                        <td>{{ item.salah}}</td>
+                        <td>{{ item.jumlah_soal}}</td>
+                        <td>{{ item.nilai}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>             
+              </nb-card-body>
+            </nb-card>            
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card> 
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">  
+    <nb-card size="medium">
+      <nb-card-header>       
+        <span>Quiz Semua Mata Pelajaran</span>
+      </nb-card-header>
+      <nb-card-body>     
+        <div class="filter-area">                                                                  
+          <div class="form-control-group with-icon">
+            <label class="label">
+              Filter By Tanggal 
+            </label>
+            <input nbInput
+              fullWidth
+              name="range"
+              placeholder="Filter By Tanggal"
+              fieldSize="large"
+              [nbDatepicker]="formpicker2"
+              [(ngModel)]="tanggalAllMatpelTable"
+              (ngModelChange)="getQuizAllMatpel()"
+            >    
+            <nb-rangepicker #formpicker2></nb-rangepicker>  
+            <nb-icon icon="calendar-outline"></nb-icon>
+          </div>    
+        </div>
+        <div class="table-wrapper">
+          <table class="table table-striped">
+            <thead>
+              <th>Tanggal</th>
+              <th>Mata Pelajaran</th>
+              <th>Benar</th>
+              <th>Salah</th>
+              <th>Jumlah Soal</th>
+              <th>Nilai</th>
+              <th>Topik</th>
+              <th>Pengajar</th>
+            </thead>
+            <tbody *ngIf="listQuizAllMatpel">
+              <tr *ngIf="listQuizAllMatpel.length == 0">
+                <td colspan="8" class="text-center">
+                  Data tidak ditemukan
+                </td>
+              </tr>
+              
+              <tr *ngFor="let item of listQuizAllMatpel">
+                <td>
+                  {{item.tanggal | date:'d MMM, y, h:mm:ss a'}}
+                </td>
+                <td>{{ item.mata_pelajaran}}</td>
+                <td>{{ item.benar}}</td>
+                <td>{{ item.salah}}</td>
+                <td>{{ item.jumlah_soal}}</td>
+                <td>{{ item.nilai}}</td>
+                <td>{{ item.topik}}</td>
+                <td>{{ item.guru}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card> 
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="modal-wrapper medium">
+  <div class="modal-header">
+    <h5 class="title">{{type}} Soal Tryout</h5>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddEditForm">
+        <div class="form-control-group">
+          <label class="label">
+            Soal
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="nama_soal" 
+                name="nama_soal"
+                placeholder="Enter soal to"
+                fieldSize="large"
+                [status]="submitted && f.nama_soal.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.nama_soal.errors">
+            <p class="caption status-danger" *ngIf="f.nama_soal.errors.required">
+              Please enter soal.
+            </p>
+          </ng-container>
+        </div>
+        <div class="form-control-group">
+          <label class="label">
+            Link
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="link" 
+                name="link"
+                placeholder="Enter link"
+                fieldSize="large"
+                [status]="submitted && f.link.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.link.errors">
+            <p class="caption status-danger" *ngIf="f.link.errors.required">
+              Please enter link.
+            </p>
+          </ng-container>
+        </div>
+        <div class="form-control-group">
+          <label class="label">
+            Kelas
+            <span class="caption status-danger">*</span>
+          </label>
+          <nb-select 
+            multiple  
+            class="form-control" 
+            formControlName="kelas" 
+            placeholder="Select kelas"
+            [(selected)]="selectedKelas">
+            <nb-option *ngFor="let item of listKelas" value="{{item.nama_kelas}}">
+              {{ item.nama_kelas }}
+            </nb-option>
+          </nb-select>   
+          <ng-container *ngIf="submitted && f.kelas.errors">
+            <p class="caption status-danger" *ngIf="f.kelas.errors.required">
+              Please select kelas.
+            </p>
+          </ng-container>   
+        </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-primary" 
+        type="submit"
+        (click)="onSubmit(AddEditForm.value)"
+        [nbSpinner]="submitLoading" 
+        [disabled]="submitLoading">
+        {{ submitLoading ? "" : action }}
+      </button>
+    </div>
+  </div>
+</div>

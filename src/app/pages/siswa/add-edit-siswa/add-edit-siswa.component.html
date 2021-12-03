@@ -1,0 +1,733 @@
+<div class="modal-wrapper xtra-large">
+  <div class="modal-header">
+    <h5 class="title">{{type}} Siswa</h5>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddEditForm">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="form-control-group">
+              <label class="label">
+                NIS
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="nis" 
+                    name="nis"
+                    maxlength="12"
+                    minlength="12"
+                    placeholder="Enter nis siswa"
+                    fieldSize="large" onkeydown="if(event.key===',' || event.key==='.'){event.preventDefault();}"
+                    oninput="if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"                  
+                    [status]="submitted && f.nis.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.nis.errors">
+                <p class="caption status-danger" *ngIf="f.nis.errors.required">
+                  Please enter NIS siswa.
+                </p>
+                <p class="caption status-danger" *ngIf="f.nis.errors.minlength && !f.nis.errors.required">
+                    Please enter 12 characters
+                </p>    
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                NIT
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput 
+                fullWidth
+                currencyMask 
+                formControlName="nit" 
+                [status]="submitted && f.nit.errors  ? 'danger' : 'basic'"
+                [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+              />
+              <ng-container *ngIf="submitted && f.nit.errors">
+                <p class="caption status-danger" *ngIf="f.nit.errors.required">
+                  Please enter nit siswa.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Nama
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="nama" 
+                    name="nama_siswa"
+                    placeholder="Enter nama siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.nama.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.nama.errors">
+                <p class="caption status-danger" *ngIf="f.nama.errors.required">
+                  Please enter nama siswa.
+                </p>
+              </ng-container>
+            </div>    
+            <div class="form-control-group">
+              <label class="label">
+                Jenis Kelamin 
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-radio-group name="jkel" formControlName="jkel" class="d-flex">
+                <nb-radio value="LAKI-LAKI" checked>Laki-laki</nb-radio>
+                <nb-radio value="PEREMPUAN">Perempuan</nb-radio>
+              </nb-radio-group>
+              <ng-container *ngIf="submitted && f.jkel.errors">
+                <p class="caption status-danger" *ngIf="f.jkel.errors.required">
+                  Please select jenis kelamin.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Agama
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select                   
+                class="form-control" 
+                formControlName="agama" 
+                placeholder="Select agama">
+                <nb-option *ngFor="let item of listAgama" value="{{item}}">
+                  {{ item }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.agama.errors">
+                <p class="caption status-danger" *ngIf="f.agama.errors.required">
+                  Please enter agama.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Nilai Aptitude
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    type="number"
+                    formControlName="aptitude" 
+                    name="aptitude"
+                    placeholder="Enter nilai aptitude"
+                    fieldSize="large"
+                    [status]="submitted && f.aptitude.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.aptitude.errors">
+                <p class="caption status-danger" *ngIf="f.aptitude.errors.required">
+                  Please enter nilai aptitude.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Tahun Ajaran
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select                   
+                class="form-control" 
+                formControlName="tahun_ajaran" 
+                placeholder="Select tahun ajaran">
+                <nb-option *ngFor="let item of listYears" value="{{item}}">
+                  {{ item }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.tahun_ajaran.errors">
+                <p class="caption status-danger" *ngIf="f.tahun_ajaran.errors.required">
+                  Please enter tahun ajaran.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Sekolah
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select                   
+                class="form-control" 
+                formControlName="sekolah" 
+                placeholder="Select sekolah"
+                [(selected)]="selectedSekolah">
+                <nb-option *ngFor="let item of listSekolah" value="{{item.nama_sekolah}}">
+                  {{ item.nama_sekolah }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.sekolah.errors">
+                <p class="caption status-danger" *ngIf="f.sekolah.errors.required">
+                  Please enter sekolah siswa.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Kelas (Sekolah)
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="kelas_sekolah" 
+                    name="sekolah"
+                    placeholder="Enter kelas sekolah siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.kelas_sekolah.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.kelas_sekolah.errors">
+                <p class="caption status-danger" *ngIf="f.kelas_sekolah.errors.required">
+                  Please enter kelas sekolah siswa.
+                </p>
+              </ng-container>
+            </div>
+            <div *ngIf="role !== 'General Admin'" class="form-control-group">
+              <label class="label">
+                Cabang
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    readonly
+                    fullWidth
+                    formControlName="cabang" 
+                    name="cabang"
+                    placeholder="Select cabang"
+                    fieldSize="large"
+                    [status]="submitted && f.cabang.errors  ? 'danger' : 'basic'"
+              >              
+              <ng-container *ngIf="submitted && f.cabang.errors">
+                <p class="caption status-danger" *ngIf="f.cabang.errors.required">
+                  Please select cabang.
+                </p>
+              </ng-container>   
+            </div>
+            <div *ngIf="role === 'General Admin'" class="form-control-group">
+              <label class="label">
+                Cabang
+                <span class="caption status-danger">*</span>
+              </label>           
+              <nb-select      
+                class="form-control" 
+                formControlName="cabang" 
+                placeholder="Select cabang"
+                [(selected)]="selectedCabang">
+                <nb-option *ngFor="let item of listCabang" value="{{item.nama_cabang}}">
+                  {{ item.nama_cabang }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.cabang.errors">
+                <p class="caption status-danger" *ngIf="f.cabang.errors.required">
+                  Please select cabang.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Jurusan (Inten)
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select 
+                class="form-control" 
+                formControlName="jurusan_inten" 
+                placeholder="Select jurusan"
+                [(selected)]="selectedJurusanInten">
+                <nb-option *ngFor="let item of listJurusanInten" value="{{item.nama_jurusan_inten}}">
+                  {{ item.nama_jurusan_inten }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.jurusan_inten.errors">
+                <p class="caption status-danger" *ngIf="f.jurusan_inten.errors.required">
+                  Please select jurusan.
+                </p>
+              </ng-container>   
+            </div>           
+            <div class="form-control-group">
+              <label class="label">
+                Total Biaya
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput 
+                fullWidth
+                currencyMask 
+                formControlName="total_biaya" 
+                [status]="submitted && f.total_biaya.errors  ? 'danger' : 'basic'"
+                [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+              />
+              <!-- <input nbInput
+                    fullWidth
+                    formControlName="total_biaya" 
+                    name="total_biaya"
+                    placeholder="Enter total biaya siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.total_biaya.errors  ? 'danger' : 'basic'"
+              > -->
+              <ng-container *ngIf="submitted && f.total_biaya.errors">
+                <p class="caption status-danger" *ngIf="f.total_biaya.errors.required">
+                  Please enter total biaya siswa.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Keterangan
+                <span class="caption status-danger">*</span>
+              </label> 
+              <textarea 
+                nbInput 
+                fullWidth  
+                rows="3"
+                formControlName="keterangan" 
+                placeholder="Enter keterangan biaya siswa"
+                [status]="submitted && f.keterangan.errors  ? 'danger' : 'basic'"
+                >
+              </textarea>
+              <ng-container *ngIf="submitted && f.keterangan.errors">
+                <p class="caption status-danger" *ngIf="f.keterangan.errors.required">
+                  Please enter keterangan.
+                </p>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-xl-4">             
+            <div class="form-control-group">
+              <label class="label">
+                Wali Kelas
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select 
+                class="form-control" 
+                formControlName="wali_kelas" 
+                placeholder="Select wali kelas"
+                [(selected)]="selectedGuru">
+                <nb-option *ngFor="let item of listGuru" value="{{item.nama}}">
+                  {{ item.nama }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.wali_kelas.errors">
+                <p class="caption status-danger" *ngIf="f.wali_kelas.errors.required">
+                  Please select wali kelas.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Kelas (Inten)
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select 
+                class="form-control" 
+                formControlName="kelas_inten" 
+                placeholder="Select kelas"
+                [(selected)]="selectedKelas">
+                <nb-option *ngFor="let item of listKelas" value="{{item.nama_kelas}}">
+                  {{ item.nama_kelas }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.kelas_inten.errors">
+                <p class="caption status-danger" *ngIf="f.kelas_inten.errors.required">
+                  Please select kelas.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Pilihan Jurusan 1
+                <span class="caption status-danger">*</span>
+              </label>
+              <!-- {{maxRowsLimitation}}
+              <ngx-dropdown-list 
+                  [items]="optionItems"
+                  [multiSelection]="false"
+                  [placeHolder]="'place holder of the drop-down list'"
+                  [selectedValue]="'Sum'"
+                  [suffixText]="'suffix text'"
+                  [filterBox]="true"
+                  [formatNumber]="true"
+                  [disabled]="false">
+              </ngx-dropdown-list> -->
+              <!-- <ng-select2  class="d-block siswa-form-select" width="100%" 
+                formControlName="jurusan_1" 
+                [placeholder]="loadJurusanService ? 'Loading service data . . .' : 'Select jurusan universitas'"
+                (ngModelChange)="onSelectJurusanUniv1($event)"
+                [(ngModel)]="selectedJurusanUniversitas1"
+                value="text"
+                [data]="listJurusanUniversitas">
+              </ng-select2> -->
+              <nb-select 
+                class="form-control" 
+                formControlName="jurusan_1" 
+                placeholder="Select jurusan universitas"
+                [(selected)]="selectedJurusanUniversitas1">
+                <nb-option *ngFor="let item of listJurusanUniversitas" value="{{item.text}}">
+                  {{ item.text }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.jurusan_1.errors">
+                <p class="caption status-danger" *ngIf="f.jurusan_1.errors.required">
+                  Please select jurusan universitas 1.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Universitas 1
+                <span class="caption status-danger">*</span>
+              </label>
+              <!-- <ng-select2  class="d-block siswa-form-select" width="100%" 
+                formControlName="universitas_1" 
+                [placeholder]="loadUniversitasService ? 'Loading service data . . .' : 'Select universitas'"
+                (ngModelChange)="onSelectUniv1($event)"
+                [(ngModel)]="selectedUniversitas1"
+                [data]="listUniversitas">
+              </ng-select2>  -->
+              <nb-select 
+                class="form-control" 
+                formControlName="universitas_1" 
+                placeholder="Select universitas"
+                [(selected)]="selectedUniversitas1">
+                <nb-option *ngFor="let item of listUniversitas" value="{{item.text}}">
+                  {{ item.text }}
+                </nb-option>
+              </nb-select>  
+              <ng-container *ngIf="submitted && f.universitas_1.errors">
+                <p class="caption status-danger" *ngIf="f.universitas_1.errors.required">
+                  Please select universitas 1.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Pilihan Jurusan 2
+                <span class="caption status-danger">*</span>
+              </label>
+              <!-- <ng-select2  class="d-block siswa-form-select" width="100%" 
+                formControlName="jurusan_2" 
+                [placeholder]="loadJurusanService ? 'Loading service data . . .' : 'Select jurusan universitas'"
+                (ngModelChange)="onSelectJurusanUniv2($event)"
+                [(ngModel)]="selectedJurusanUniversitas2"
+                [data]="listJurusanUniversitas">
+              </ng-select2> -->
+              <nb-select 
+                class="form-control" 
+                formControlName="jurusan_2" 
+                placeholder="Select jurusan universitas"
+                [(selected)]="selectedJurusanUniversitas2">
+                <nb-option *ngFor="let item of listJurusanUniversitas" value="{{item.text}}">
+                  {{ item.text }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.jurusan_2.errors">
+                <p class="caption status-danger" *ngIf="f.jurusan_2.errors.required">
+                  Please select jurusan universitas 1.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Universitas 2
+                <span class="caption status-danger">*</span>
+              </label>
+              <!-- <ng-select2  class="d-block siswa-form-select" width="100%" 
+                formControlName="universitas_2" 
+                [placeholder]="loadUniversitasService ? 'Loading service data . . .' : 'Select universitas'"
+                (ngModelChange)="onSelectUniv2($event)"
+                [(ngModel)]="selectedUniversitas2"
+                [data]="listUniversitas">
+              </ng-select2>   -->
+              <nb-select 
+                class="form-control" 
+                formControlName="universitas_2" 
+                placeholder="Select universitas"
+                [(selected)]="selectedUniversitas2">
+                <nb-option *ngFor="let item of listUniversitas" value="{{item.text}}">
+                  {{ item.text }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.universitas_2.errors">
+                <p class="caption status-danger" *ngIf="f.universitas_2.errors.required">
+                  Please select universitas 2.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Hari Les
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select 
+                multiple  
+                class="form-control" 
+                formControlName="hari_les" 
+                placeholder="Select hari les">
+                <nb-option *ngFor="let item of listDays" value="{{item}}">
+                  {{ item }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.hari_les.errors">
+                <p class="caption status-danger" *ngIf="f.hari_les.errors.required">
+                  Please select hari les.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Tanggal Masuk
+                <span class="caption status-danger">*</span>
+              </label>              
+              <input
+                fullWidth
+                readonly
+                nbInput
+                ngModel
+                name="range"
+                formControlName='tanggal_masuk'
+                [nbDatepicker]="tanggal_masuk"
+                [(ngModel)]="dateMasuk" 
+                placeholder="Enter tanggal masuk" 
+                [status]="submitted && f.tanggal_masuk.errors  ? 'danger' : 'basic'"
+              />              
+              <nb-datepicker #tanggal_masuk></nb-datepicker>
+              <ng-container *ngIf="submitted && f.tanggal_masuk.errors">
+                <p class="caption status-danger" *ngIf="f.tanggal_masuk.errors.required">
+                  Please select tanggal masuk.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Tempat Lahir
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="tempat_lahir" 
+                    name="tempat_lahir"
+                    placeholder="Enter tempat lahir siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.tempat_lahir.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.tempat_lahir.errors">
+                <p class="caption status-danger" *ngIf="f.tempat_lahir.errors.required">
+                  Please enter tempat lahir siswa.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Tanggal Lahir
+                <span class="caption status-danger">*</span>
+              </label>
+              <input
+                fullWidth
+                readonly
+                nbInput
+                ngModel
+                name="range"
+                formControlName='tanggal_lahir'
+                [nbDatepicker]="tanggal_lahir"
+                [(ngModel)]="dateLahir" 
+                placeholder="Enter tanggal lahir" 
+                [status]="submitted && f.tanggal_lahir.errors  ? 'danger' : 'basic'"
+              />              
+              <nb-datepicker #tanggal_lahir></nb-datepicker>
+              <ng-container *ngIf="submitted && f.tanggal_lahir.errors">
+                <p class="caption status-danger" *ngIf="f.tanggal_lahir.errors.required">
+                  Please enter tanggal lahir siswa.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Alamat
+                <span class="caption status-danger">*</span>
+              </label> 
+              <textarea 
+                nbInput 
+                fullWidth  
+                rows="3"
+                formControlName="alamat" 
+                placeholder="Enter alamat siswa"
+                [status]="submitted && f.alamat.errors  ? 'danger' : 'basic'"
+                >
+              </textarea>
+              <ng-container *ngIf="submitted && f.alamat.errors">
+                <p class="caption status-danger" *ngIf="f.alamat.errors.required">
+                  Please enter alamat.
+                </p>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-xl-4">                      
+            <div class="form-control-group">
+              <label class="label">
+                No. Tlp / WA
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="no_tlp" 
+                    name="no_tlp"
+                    type="number"
+                    placeholder="Enter no.tlp siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.no_tlp.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.no_tlp.errors">
+                <p class="caption status-danger" *ngIf="f.no_tlp.errors.required">
+                  Please enter no.tlp siswa.
+                </p>
+              </ng-container>
+            </div>                        
+            <div class="form-control-group">
+              <label class="label">
+                Email
+                <span class="caption status-danger">*</span>
+              </label> 
+              <input nbInput
+                    fullWidth
+                    formControlName="email" 
+                    name="email"
+                    placeholder="Enter email siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.email.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.email.errors">
+                <p class="caption status-danger" *ngIf="f.email.errors.required">
+                  Please enter email.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Nama Ayah
+                <span class="caption status-danger">*</span>
+              </label> 
+              <input nbInput
+                    fullWidth
+                    formControlName="nama_ayah" 
+                    name="nama_ayah"
+                    placeholder="Enter nama ayah siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.nama_ayah.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.nama_ayah.errors">
+                <p class="caption status-danger" *ngIf="f.nama_ayah.errors.required">
+                  Please enter nama ayah.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Pekerjaan Ayah
+                <span class="caption status-danger">*</span>
+              </label> 
+              <input nbInput
+                    fullWidth
+                    formControlName="pekerjaan_ayah" 
+                    name="pekerjaan_ayah"
+                    placeholder="Enter pekerjaan ayah siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.pekerjaan_ayah.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.pekerjaan_ayah.errors">
+                <p class="caption status-danger" *ngIf="f.pekerjaan_ayah.errors.required">
+                  Please enter pekerjaan ayah.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                No. Tlp / WA - Ayah
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="no_tlp_ayah" 
+                    name="no_tlp_ayah"
+                    type="number"
+                    placeholder="Enter no.tlp ayah siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.no_tlp_ayah.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.no_tlp_ayah.errors">
+                <p class="caption status-danger" *ngIf="f.no_tlp_ayah.errors.required">
+                  Please enter no.tlp ayah siswa.
+                </p>
+              </ng-container>
+            </div>     
+            <div class="form-control-group">
+              <label class="label">
+                Nama Ibu
+                <span class="caption status-danger">*</span>
+              </label> 
+              <input nbInput
+                    fullWidth
+                    formControlName="nama_ibu" 
+                    name="nama_ibu"
+                    placeholder="Enter nama ibu siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.nama_ibu.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.nama_ibu.errors">
+                <p class="caption status-danger" *ngIf="f.nama_ibu.errors.required">
+                  Please enter nama ibu.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Pekerjaan Ibu
+                <span class="caption status-danger">*</span>
+              </label> 
+              <input nbInput
+                    fullWidth
+                    formControlName="pekerjaan_ibu" 
+                    name="pekerjaan_ibu"
+                    placeholder="Enter pekerjaan ibu siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.pekerjaan_ibu.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.pekerjaan_ibu.errors">
+                <p class="caption status-danger" *ngIf="f.pekerjaan_ibu.errors.required">
+                  Please enter pekerjaan ibu.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                No. Tlp / WA - Ibu
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="no_tlp_ibu" 
+                    name="no_tlp_ibu"
+                    type="number"
+                    placeholder="Enter no.tlp ibu siswa"
+                    fieldSize="large"
+                    [status]="submitted && f.no_tlp_ibu.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.no_tlp_ibu.errors">
+                <p class="caption status-danger" *ngIf="f.no_tlp_ibu.errors.required">
+                  Please enter no.tlp ibu siswa.
+                </p>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-primary" 
+        type="submit"
+        (click)="onSubmit(AddEditForm.value)"
+        [nbSpinner]="submitLoading" 
+        [disabled]="submitLoading">
+        {{ submitLoading ? "" : action }}
+      </button>
+    </div>
+  </div>
+</div>

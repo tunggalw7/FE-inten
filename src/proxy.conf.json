@@ -1,0 +1,14 @@
+{    
+    "/core": { 
+        "target": "http://localhost:3000",
+        "secure": false, 
+        "changeOrigin": true, 
+        "pathRewrite": { "^/core": "" } 
+    },
+    "/files": {
+        "target": "https://files.shami.glovory.men",
+        "secure": false,
+        "changeOrigin": true,
+        "pathRewrite": { "^/files": "" } 
+    }
+}

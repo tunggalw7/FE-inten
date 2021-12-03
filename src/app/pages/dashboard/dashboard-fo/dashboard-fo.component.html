@@ -1,0 +1,181 @@
+<div class="row mt-3">      
+  <div class="col-md-3">
+    <div class="card">
+      <span class="icon-wrapper siswa">
+        <nb-icon icon="people-outline"></nb-icon>
+      </span>
+      <div class="label-total">Total Siswa</div>
+      <h4 *ngIf="listSiswa">{{listSiswa.length}}</h4>
+    </div> 
+  </div>
+  <div class="col-md-3">
+    <div class="card">
+      <span class="icon-wrapper coupons">
+        <nb-icon icon="star-outline"></nb-icon>
+      </span>
+      <div class="label-total">Total Guru</div>
+      <h4 *ngIf="totalGuru">{{totalGuru.length}}</h4>
+    </div>   
+  </div>
+  <div class="col-md-3">
+    <div class="card">
+      <span class="icon-wrapper kelas">
+        <nb-icon icon="home-outline"></nb-icon>
+      </span>
+      <div class="label-total">Total Kelas</div>
+      <h4 *ngIf="totalKelas">{{totalKelas.length}}</h4>
+    </div> 
+  </div>
+  <div class="col-md-3">
+    <div class="card">
+      <span class="icon-wrapper earnings">
+        <nb-icon icon="credit-card-outline"></nb-icon>
+      </span>
+      <div class="label-total">Total Uang Biaya</div>
+      <h4 *ngIf="totalUB">
+        Rp {{ totalUB | number:'1.0-2' }}
+      </h4>
+    </div>    
+  </div>
+</div>  
+<div class="row mt-4">
+  <div class="col-xl-4">
+    <nb-card size="large">
+      <nb-card-header class="text-center">
+        <h3>{{currentUser.name}}</h3>
+        <div>{{currentUser.role}}</div>
+        <div>{{currentUser.cabang}}</div>
+      </nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="chartAbsen" class="echart"></div>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+  <div class="col-xl-8">
+    <nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+      <nb-card-front>
+        <nb-card size="large">      
+          <nb-card size="large">
+             <nb-card-header class="header-filter">
+               <div>
+                 Jumlah bayar UB Siswa per hari  
+               </div>
+             </nb-card-header>
+             <nb-card-body>        
+              <div class="filter-area">                                            
+                <div class="form-control-group">
+                  <nb-select class="form-control" 
+                    placeholder="Filter By Month"
+                    [(ngModel)]="monthUB"
+                    (ngModelChange)="changeMonth()"
+                    >
+                    <nb-option *ngFor="let item of month" value="{{ item.value }}">
+                      {{ item.name }}
+                    </nb-option>
+                  </nb-select>    
+                </div>  
+              </div>        
+               <div class="form-control-group text-center">
+                 <div echarts [options]="options" class="echart"></div>
+               </div>
+             </nb-card-body>
+           </nb-card>   
+          <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+        </nb-card>
+      </nb-card-front>
+      <nb-card-back>
+        <nb-card size="large">   
+          <nb-card size="large">
+             <nb-card-header class="header-filter">
+               <div>
+                 Jumlah bayar UB Siswa per hari  
+               </div>
+             </nb-card-header>
+             <nb-card-body>        
+              <div class="filter-area">                                            
+                <div class="form-control-group">
+                  <nb-select class="form-control" 
+                    placeholder="Filter By Month"
+                    [(ngModel)]="monthUB"
+                    (ngModelChange)="changeMonth()"
+                    >
+                    <nb-option *ngFor="let item of month" value="{{ item.value }}">
+                      {{ item.name }}
+                    </nb-option>
+                  </nb-select>    
+                </div>  
+              </div>        
+               <div class="form-control-group text-center">
+                 <div echarts [options]="options2" class="echart"></div>
+               </div>
+             </nb-card-body>
+           </nb-card>   
+          <nb-icon icon="chevron-right-outline" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+        </nb-card>
+      </nb-card-back>
+    </nb-flip-card>
+    
+  </div>
+</div>  
+<div class="row" *ngIf="currentUser.role !== 'Wali Kelas' && currentUser.role !== 'Guru'">
+  <div class="col-xl-12">
+    <nb-card size="large">
+      <nb-card-header>
+        Data Semua Siswa Per Cabang
+      </nb-card-header>
+      <nb-card-body>        
+        <div class="table-wrapper dashboard">          
+          <div class="filter-bar dashboard d-flex align-items-center justify-content-between">
+            <div class="form-control-group field-search">
+              <label>Search</label>
+              <input type="text" class="form-control" nbInput 
+                (keyup)="updateFilter($event)"
+                placeholder="Search tryout">
+              <button type="button" nbButton [ngClass]="btnSearchClose"></button>
+            </div>
+          </div>
+          
+          <div class="table-wrapper">
+            <table class="table table-striped">
+              <thead>
+                <th>NIS</th>
+                <th>Nama</th>
+                <th>Sekolah</th>
+                <th>Kelas Sekolah</th>
+                <th>Jurusan</th>
+                <th>Kelas Inten</th>
+                <th>Pilihan Jurusan 1</th>
+                <th>Universitas 1</th>
+                <th>Pilihan Jurusan 2</th>
+                <th>Universitas 2</th>
+                <th>Hari Les</th>
+                <th>No. Telp Orang Tua</th>
+              </thead>
+              <tbody>
+                <tr *ngIf="listSiswa.length == 0">
+                  <td colspan="11" class="text-center">
+                    Belum melakukan pembayaran
+                  </td>
+                </tr>                  
+                <tr *ngFor="let item of listSiswa">
+                  <td>{{ item.nis}}</td>
+                  <td>{{ item.nama}}</td>
+                  <td>{{ item.sekolah}}</td>
+                  <td>{{ item.kelas_sekolah}}</td>
+                  <td>{{ item.jurusan}}</td>
+                  <td>{{ item.kelas_inten}}</td>
+                  <td>{{ item.pilihan_jurusan_1}}</td>
+                  <td>{{ item.universitas_1}}</td>
+                  <td>{{ item.pilihan_jurusan_2}}</td>
+                  <td>{{ item.universitas_2}}</td>
+                  <td>{{ item.hari_les}}</td>
+                  <td>{{ item.no_tlp_ayah + '/' + item.no_tlp_ibu}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>   
+        </div>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+</div>

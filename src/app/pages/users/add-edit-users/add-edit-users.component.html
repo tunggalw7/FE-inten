@@ -1,0 +1,216 @@
+<div class="modal-wrapper large">
+  <div class="modal-header">
+    <h5 class="title">{{type}} Users</h5>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddEditForm">
+        <div class="row">
+          <div class="col-xl-6">
+            <div class="form-control-group">
+              <label class="label">
+                Nama
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="nama" 
+                    name="nama_users"
+                    placeholder="Enter nama users"
+                    fieldSize="large"
+                    [status]="submitted && f.nama.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.nama.errors">
+                <p class="caption status-danger" *ngIf="f.nama.errors.required">
+                  Please enter nama users.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Email 
+              </label>
+              <input nbInput
+                    fullWidth
+                    type="email"
+                    formControlName="email" 
+                    name="email"
+                    placeholder="e.g. john@gmail.com"
+                    fieldSize="large"
+                    [status]="submitted && f.email.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.email.errors">
+                <p class="caption status-danger" *ngIf="f.email.errors.required">
+                  Please enter email address.
+                </p>
+                <p class="caption status-danger" *ngIf="f.email.errors.mailFormat && !f.email.errors.required">
+                  Email format is invalid.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Password 
+                <span class="caption status-danger">*</span>
+              </label>
+              <div class="password-field-group">
+                <input nbInput
+                       fullWidth
+                       formControlName="password" 
+                       name="password"
+                       [type]="getInputType()"
+                       fieldSize="large"
+                       placeholder="Must have at least 6 characters"
+                       [status]="submitted && f.password.errors  ? 'danger' : 'basic'"
+                >
+                <button type="button" class="eyetrigger" nbSuffix nbButton ghost (click)="toggleShowPassword()">
+                  <nb-icon [icon]="showPassword ? 'eye-outline' : 'eye-off-outline'"
+                           pack="eva"
+                           [attr.aria-label]="showPassword ? 'hide password' : 'show password'">
+                  </nb-icon>
+                </button>
+              </div>
+              <ng-container *ngIf="submitted && f.password.errors">
+                <p class="caption status-danger" *ngIf="f.password.errors.required">
+                  Password required.
+                </p>
+                <p class="caption status-danger" *ngIf="f.password.errors.minlength">
+                  Password minimum length of 6 characters.
+                </p>
+                <p class="caption status-danger" *ngIf="f.password.errors.maxlength">
+                  Password maximum length of 50 characters.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Alamat
+              </label>          
+              <textarea 
+                nbInput 
+                fullWidth  
+                rows="3"
+                formControlName="alamat" 
+                placeholder="Enter alamat users"
+                [status]="submitted && f.alamat.errors  ? 'danger' : 'basic'"
+                >
+              </textarea>
+              <ng-container *ngIf="submitted && f.alamat.errors">
+                <p class="caption status-danger" *ngIf="f.alamat.errors.required">
+                  Please enter alamat users.
+                </p>
+              </ng-container>
+            </div>
+          </div>
+          <div class="col-xl-6">
+            <div class="form-control-group">
+              <label class="label">
+                No. Tlp / WA
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="no_tlp" 
+                    name="no_tlp"
+                    type="number"
+                    placeholder="Enter no.tlp users"
+                    fieldSize="large"
+                    [status]="submitted && f.no_tlp.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.no_tlp.errors">
+                <p class="caption status-danger" *ngIf="f.no_tlp.errors.required">
+                  Please enter no.tlp users.
+                </p>
+              </ng-container>
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Cabang
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select                   
+                class="form-control" 
+                formControlName="cabang" 
+                placeholder="Select cabang"
+                [(selected)]="selectedCabang">
+                <nb-option *ngFor="let item of listCabang" value="{{item.nama_cabang}}">
+                  {{ item.nama_cabang }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.cabang.errors">
+                <p class="caption status-danger" *ngIf="f.cabang.errors.required">
+                  Please select cabang.
+                </p>
+              </ng-container>   
+            </div>
+            <div class="form-control-group">
+              <label class="label">
+                Role
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-select 
+                class="form-control" 
+                formControlName="role" 
+                placeholder="Select kelas"
+                [(selected)]="selectedRole">
+                <nb-option *ngFor="let item of listRole" value="{{item}}">
+                  {{ item }}
+                </nb-option>
+              </nb-select>   
+              <ng-container *ngIf="submitted && f.role.errors">
+                <p class="caption status-danger" *ngIf="f.role.errors.required">
+                  Please select role.
+                </p>
+              </ng-container>   
+            </div>  
+            <div class="form-control-group">
+              <label class="label">
+                Nomer Induk
+                <span class="caption status-danger">*</span>
+              </label>
+              <input nbInput
+                    fullWidth
+                    formControlName="no_induk" 
+                    name="no_induk"
+                    placeholder="Enter nomer induk"
+                    fieldSize="large"
+                    [status]="submitted && f.no_induk.errors  ? 'danger' : 'basic'"
+              >
+              <ng-container *ngIf="submitted && f.no_induk.errors">
+                <p class="caption status-danger" *ngIf="f.no_induk.errors.required">
+                  Please enter nomer induk.
+                </p>
+              </ng-container>
+            </div>          
+            <div class="form-control-group">
+              <label class="label">
+                Status 
+                <span class="caption status-danger">*</span>
+              </label>
+              <nb-radio-group name="is_active" formControlName="is_active" class="d-flex">
+                <nb-radio value="active" checked>Active</nb-radio>
+                <nb-radio value="suspended">Suspended</nb-radio>
+              </nb-radio-group>
+              <ng-container *ngIf="submitted && f.is_active.errors">
+                <p class="caption status-danger" *ngIf="f.is_active.errors.required">
+                  Please select status.
+                </p>
+              </ng-container>   
+            </div>
+          </div>
+        </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-primary" 
+        type="submit"
+        (click)="onSubmit(AddEditForm.value)"
+        [nbSpinner]="submitLoading" 
+        [disabled]="submitLoading">
+        {{ submitLoading ? "" : action }}
+      </button>
+    </div>
+  </div>
+</div>

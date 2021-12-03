@@ -1,0 +1,10 @@
+<nb-card style="min-width: 550px">
+    <nb-card-header>Delete Confirmation</nb-card-header>
+    <nb-card-body class="mt-4 mb-4">Are you sure you want to delete "{{ dataForm.nama_jurusan_universitas }}" ?</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-end">
+        <button class="btn btn-primary-o" [disabled]="submitLoading" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-primary ml-3"  [nbSpinner]="submitLoading" [disabled]="submitLoading" (click)="onDelete()">
+            {{ submitLoading ? "" : "Delete" }}
+        </button>
+    </nb-card-footer>
+</nb-card>

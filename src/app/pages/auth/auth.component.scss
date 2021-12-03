@@ -1,0 +1,181 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+  	$auth-layout-padding: 2.5rem;
+
+	nb-layout-column.auth-layout-card {
+		margin: 0;
+		background-color: #fff;
+	}
+
+	.auth-wrapper{		
+		height: 100%;
+		flex-flow: wrap;
+	}
+	// logo wrapper img 
+	.logo-wrapper {
+		width: max-content;
+		margin: 0 auto; 
+		top: 1em;
+		left: 2em;
+		position: absolute;
+		img{			
+			width: 20em;
+		}
+	}
+
+	.background-wrapper, .login-wrapper{		
+		// width: 100%;
+		/* position: relative; */
+		margin: auto;
+	}
+
+	.login-card{
+		width: 35em;
+	}
+
+	nb-card.auth-card {
+		max-width: 38em;
+		margin: auto;
+		border: none;
+		border-radius: 2%;
+		margin-top: 36px;
+
+		nb-card-body {
+			display: flex;
+			width: 100%;
+			&.auth-card-body {
+				overflow: visible;
+				padding: 2em;
+				position: relative;
+				.auth-logo-wrapper {
+					max-width: 61px;
+					height: auto;
+					margin: 0 auto;
+				}
+			}
+		}
+	}
+	
+	.title {
+		text-align: center;
+		margin-bottom: 10px;
+		font-size: 24px;
+		color: nb-theme(color-dark-primary-200);
+	}
+	.sub-title{
+		text-align: center;
+		margin-bottom: 2em;
+		font-size: 18px;
+		color: nb-theme(color-dark-primary-200);
+	}
+	p.sub-title {
+		text-align: center !important;
+		color: nb-theme(color-dark-primary-200);
+		font-size: nb-theme(sub-title-font-size);
+	}
+
+
+	.password-field-group {
+		position: relative;
+
+		.eyetrigger {
+			position: absolute;
+			top: 50%;
+			right: 0.25rem;
+
+			@include nb-rtl() {
+				right: unset;
+				left: 0.25rem;
+			}
+
+			;
+			transform: translateY(-50%);
+			}
+
+			.eyetrigger:focus,
+			.eyetrigger:active {
+				border: none;
+				box-shadow: none;
+				background: inherit;
+				
+		}
+	}
+
+	.form-control-group {
+		margin-bottom: 2.5rem;
+	}
+
+	::ng-deep {
+		nb-layout .layout .layout-container .content .columns nb-layout-column {
+			padding: 0 2.5rem;
+			@include media-breakpoint-down(sm) {
+				padding: 0;
+			}
+		}
+
+		// Checkbox Checked Color
+		nb-checkbox.status-basic {
+			.custom-checkbox:hover.checked, 
+			.custom-checkbox.checked, 
+			.native-input:enabled:focus + .custom-checkbox.indeterminate, 
+			.native-input:enabled:focus + .custom-checkbox.checked {
+				background-color: #474790;
+				border-color: #474790;
+			}
+		}
+
+		nb-select.appearance-outline.status-basic {
+			.select-button {
+				background-color: unset;
+				border-color: transparent;
+				color: #a0a0a0;
+				font-weight: bold;
+			}
+		}
+		
+		nb-option.selected {
+			background-color: #474790;
+		}
+
+		.caption.status-danger {
+			position: absolute;
+		}
+
+		nb-spinner.status-basic .spin-circle {
+			border-color: nb-theme(color-dark-primary-200);
+			border-right-color: transparent;
+		}
+
+		[nbButton].appearance-filled.status-basic {
+			color: #fff;
+			background-color: #474790;
+			text-transform: capitalize;
+			min-height: 48px;
+	
+			&:hover,
+			&:focus,
+			&:active {
+				background-color: #474790 !important;
+				opacity: 0.8;
+			}
+
+			&[disabled] {
+				background-color: rgba(143, 155, 179, 0.24) !important;
+				border-color: rgba(143, 155, 179, 0.24);
+				color: rgba(143, 155, 179, 0.48);
+	
+				&:hover,
+				&:focus,
+				&:active {
+					background-color: rgba(143, 155, 179, 0.24) !important;
+					border-color: rgba(143, 155, 179, 0.24);
+					color: rgba(143, 155, 179, 0.48);
+				}
+			}
+		}
+	}
+	
+}

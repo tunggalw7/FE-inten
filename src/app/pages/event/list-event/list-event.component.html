@@ -1,0 +1,127 @@
+
+<div class="d-flex mb-4 align-items-center">
+  <h5 class="title">Event</h5>
+  <div class="ml-3"><button *ngIf="role !== 'Manajemen'" class="btn btn-primary" (click)="addUser()">Add Record</button></div>
+</div>  
+<div class="table-wrapper">
+  <div class="filter-bar d-flex align-items-center justify-content-between">
+    <div class="form-control-group field-search">
+      <label>Search</label>
+      <input type="text" class="form-control" nbInput 
+        [(ngModel)]="page.search"
+        (ngModelChange)="onKeyChange($event)" 
+        (keydown.enter)="onSearch(page.search)"
+        placeholder="Search by event">
+      <button type="button" nbButton (click)="clearSearch()" [ngClass]="btnSearchClose"></button>
+    </div>
+  </div>
+  
+  <ngx-datatable #dataTable *ngIf="!isLoadData"
+    style="width: 100%"
+    class="table"
+    [rows]="rows"
+    [columnMode]="'force'"
+    [headerHeight]="60"
+    [footerHeight]="50"
+    rowHeight="auto"
+
+    [selected]="selectedRowData"
+    [selectionType]="'checkbox'"
+    (select)="onSelect($event)"
+    [messages]="{emptyMessage: 'Data not found.'}"
+    
+    [externalPaging]="true"
+    [externalSorting]="true"
+    [sortType]="'single'"
+    [count]="page.totalItems"
+    [offset]="page.pageNumber"
+    [limit]="page.pageLimit"
+    (page)="setPage($event)"
+    (sort)="setSort($event)">    
+    <ngx-datatable-column name="Sort" [width]="50" prop="sort">
+      <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+        <div class="custom-sort" (click)="sortBy('sort')">
+          <span class="datatable-header-cell-wrapper mr-2">
+            <span class="datatable-header-cell-label draggable">Sort</span>
+          </span>
+          <nb-icon *ngIf="page.orderBy == 'sort' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+          <nb-icon *ngIf="page.orderBy == 'sort' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+        </div>
+      </ng-template>
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>{{ row.sort }}</div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Event" [width]="250" prop="nama">
+      <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+        <div class="custom-sort" (click)="sortBy('nama')">
+          <span class="datatable-header-cell-wrapper mr-2">
+            <span class="datatable-header-cell-label draggable">Event</span>
+          </span>
+          <nb-icon *ngIf="page.orderBy == 'nama' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+          <nb-icon *ngIf="page.orderBy == 'nama' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+        </div>
+      </ng-template>
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>{{ row.nama }}</div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Tanggal" [width]="250" prop="tanggal">
+      <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+        <div class="custom-sort" (click)="sortBy('tanggal')">
+          <span class="datatable-header-cell-wrapper mr-2">
+            <span class="datatable-header-cell-label draggable">Tanggal</span>
+          </span>
+          <nb-icon *ngIf="page.orderBy == 'tanggal' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+          <nb-icon *ngIf="page.orderBy == 'tanggal' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+        </div>
+      </ng-template>
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div>{{ row.tanggal }}</div>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column *ngIf="role !== 'Manajemen'" [width]="50">
+      <ng-template let-row="row" ngx-datatable-cell-template>
+        <div class="text-right action-btns">
+          <button type="button" class="btn btn-text purple" (click)="editUser(row)">
+            <nb-icon icon="edit-2-outline"></nb-icon> Edit
+          </button>
+          <button type="button" class="btn btn-text red" (click)="deleteUser(row)">
+            <nb-icon icon="trash-2-outline"></nb-icon> Delete
+          </button>
+        </div>
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-footer>
+      <ng-template
+        ngx-datatable-footer-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset">
+        
+        <div class="page-count ng-star-inserted" *ngIf="page.totalItems > 0">
+          <div style="padding: 5px 10px">
+            {{ curPage }} of {{ page.totalPages }} pages | {{ page.totalItems }} records
+          </div>
+        </div>
+        <datatable-pager *ngIf="page.totalPages > 1"
+          [pagerLeftArrowIcon]="'datatable-icon-left'"
+          [pagerRightArrowIcon]="'datatable-icon-right'"
+          [pagerPreviousIcon]="'datatable-icon-prev'"
+          [pagerNextIcon]="'datatable-icon-skip'"
+          [page]="curPage"
+          [size]="pageSize"
+          [count]="rowCount"
+          (change)="dataTable.onFooterPage($event)">
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>      
+  </ngx-datatable>
+  <div class="skeleton-table pt-5" *ngIf="isLoadData && !isNotFound">
+    <ngx-skeleton-loader class="d-flex" style="margin-left: -10px; margin-right: -10px" count="5" [theme]="{ height: '30px', 'border-radius': '10px', 'margin': '0 10px 35px'}"></ngx-skeleton-loader>
+    <ngx-skeleton-loader count="5" [theme]="{ height: '30px', 'border-radius': '10px', 'margin-bottom': '30px' }"></ngx-skeleton-loader>
+  </div>
+</div>

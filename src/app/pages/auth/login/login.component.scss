@@ -1,0 +1,32 @@
+@import '../../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+.nb-theme-default{
+    nb-card.login-card{
+        margin-top: 120px;
+    }
+}
+@include nb-install-component() {
+    .logo-wrapper{
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        transform: translateY(-150%);
+    }
+    .form-control-group{
+        input.status-basic {
+            background-color: transparent;
+            border-color: #babbba;
+        }
+        .forgot-password {
+          color: #474790;
+        }
+    } 
+    button.appearance-filled.status-basic:focus{
+        background-color: #538736;
+    }
+}

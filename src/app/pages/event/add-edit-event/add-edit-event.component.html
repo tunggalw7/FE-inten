@@ -1,0 +1,80 @@
+<div class="modal-wrapper medium">
+  <div class="modal-header">
+    <h5 class="title">{{type}} Event</h5>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddEditForm">
+        <div class="form-control-group">
+          <label class="label">
+            Event
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="nama" 
+                name="nama"
+                placeholder="Enter jurusan event"
+                fieldSize="large"
+                [status]="submitted && f.nama.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.nama.errors">
+            <p class="caption status-danger" *ngIf="f.nama.errors.required">
+              Please enter event.
+            </p>
+          </ng-container>
+        </div>
+        <div class="form-control-group">
+          <label class="label">
+            Tanggal
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="tanggal" 
+                name="tanggal"
+                placeholder="Enter tanggal event"
+                fieldSize="large"
+                [status]="submitted && f.tanggal.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.tanggal.errors">
+            <p class="caption status-danger" *ngIf="f.tanggal.errors.required">
+              Please enter tanggal.
+            </p>
+          </ng-container>
+        </div>
+        <div class="form-control-group">
+          <label class="label">
+            Sort
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="sort" 
+                name="sort"
+                placeholder="Enter sort event"
+                fieldSize="large"
+                [status]="submitted && f.sort.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.sort.errors">
+            <p class="caption status-danger" *ngIf="f.sort.errors.required">
+              Please enter sort.
+            </p>
+          </ng-container>
+        </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-primary" 
+        type="submit"
+        (click)="onSubmit(AddEditForm.value)"
+        [nbSpinner]="submitLoading" 
+        [disabled]="submitLoading">
+        {{ submitLoading ? "" : action }}
+      </button>
+    </div>
+  </div>
+</div>

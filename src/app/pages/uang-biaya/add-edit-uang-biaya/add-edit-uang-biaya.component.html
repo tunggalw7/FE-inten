@@ -1,0 +1,659 @@
+
+<div id="test">
+  <div class="d-flex align-items-center">
+    <h5 class="title">Uang Biaya Siswa</h5>
+  </div>  
+  <form [formGroup]="UangBiayaForm">
+    <div class="table-wrapper">  
+          <div class="row">
+            <div class="col-xl-4">          
+              <div class="form-control-group">
+                <label class="label">
+                  NIS 
+                  <span class="caption status-danger">*</span>
+                </label>
+                <div class="password-field-group">
+                  <input nbInput
+                        fullWidth
+                        name="nis"
+                        readonly
+                        fieldSize="large"
+                        formControlName="nis" 
+                        placeholder="Enter NIS siswa"
+                        [disabled]="type === 'Edit'"
+                        [status]="submitted && f.nis.errors  ? 'danger' : 'basic'"
+                  >
+                  <button type="button" class="eyetrigger" nbSuffix nbButton ghost (click)="openListSiswa()">
+                    <nb-icon icon="file-text" pack="eva">
+                    </nb-icon>
+                  </button>
+                </div>
+                <ng-container *ngIf="submitted && f.nis.errors">
+                  <p class="caption status-danger" *ngIf="f.nis.errors.required">
+                    Please enter NIS.
+                  </p>
+                </ng-container>   
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Nama
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="nama" 
+                      name="nama"
+                      placeholder="Enter nama siswa"
+                      fieldSize="medium"
+                      [status]="submitted && f.nama.errors  ? 'danger' : 'basic'"
+                >      
+                <ng-container *ngIf="submitted && f.nama.errors">
+                  <p class="caption status-danger" *ngIf="f.nama.errors.required">
+                    Please enter nama.
+                  </p>
+                </ng-container> 
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Tahun Ajaran
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="tahun_ajaran" 
+                      name="tahun_ajaran"
+                      placeholder="Enter tahun ajaran siswa"
+                      [status]="submitted && f.tahun_ajaran.errors  ? 'danger' : 'basic'"
+                      fieldSize="medium"
+                >      
+                <ng-container *ngIf="submitted && f.tahun_ajaran.errors">
+                  <p class="caption status-danger" *ngIf="f.tahun_ajaran.errors.required">
+                    Please enter tahun ajaran.
+                  </p>
+                </ng-container>
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Sekolah
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="sekolah" 
+                      name="sekolah"
+                      placeholder="Enter sekolah siswa"
+                      [status]="submitted && f.sekolah.errors  ? 'danger' : 'basic'"
+                      fieldSize="medium"
+                >    
+                <ng-container *ngIf="submitted && f.sekolah.errors">
+                  <p class="caption status-danger" *ngIf="f.sekolah.errors.required">
+                    Please enter sekolah.
+                  </p>
+                </ng-container>  
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Kelas Sekolah
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="kelas_sekolah" 
+                      name="kelas_sekolah"
+                      placeholder="Enter kelas sekolah siswa"
+                      [status]="submitted && f.kelas_sekolah.errors  ? 'danger' : 'basic'"
+                      fieldSize="medium"
+                >      
+                <ng-container *ngIf="submitted && f.kelas_sekolah.errors">
+                  <p class="caption status-danger" *ngIf="f.kelas_sekolah.errors.required">
+                    Please enter kelas sekolah.
+                  </p>
+                </ng-container>
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Cabang
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="cabang" 
+                      name="cabang"
+                      placeholder="Enter cabang siswa"
+                      [status]="submitted && f.cabang.errors  ? 'danger' : 'basic'"
+                      fieldSize="medium"
+                >      
+                <ng-container *ngIf="submitted && f.cabang.errors">
+                  <p class="caption status-danger" *ngIf="f.cabang.errors.required">
+                    Please enter cabang.
+                  </p>
+                </ng-container>
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Wali Kelas
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="wali_kelas" 
+                      name="wali_kelas"
+                      placeholder="Enter wali kelas siswa"
+                      [status]="submitted && f.wali_kelas.errors  ? 'danger' : 'basic'"
+                      fieldSize="medium"
+                >      
+                <ng-container *ngIf="submitted && f.wali_kelas.errors">
+                  <p class="caption status-danger" *ngIf="f.wali_kelas.errors.required">
+                    Please enter wali kelas.
+                  </p>
+                </ng-container>
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Tanggal Masuk
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      readonly
+                      formControlName="tanggal_masuk" 
+                      name="tanggal_masuk"
+                      placeholder="Enter tanggal masuk siswa"
+                      [status]="submitted && f.tanggal_masuk.errors  ? 'danger' : 'basic'"
+                      fieldSize="medium"
+                >     
+                <ng-container *ngIf="submitted && f.tanggal_masuk.errors">
+                  <p class="caption status-danger" *ngIf="f.tanggal_masuk.errors.required">
+                    Please enter tanggal masuk.
+                  </p>
+                </ng-container> 
+              </div>         
+            </div>
+            <div class="col-xl-4">          
+              <div class="form-control-group">
+                <label class="label">
+                  Total Biaya
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput 
+                  fullWidth
+                  readonly
+                  currencyMask 
+                  formControlName="total_biaya" 
+                  [status]="submitted && f.total_biaya.errors  ? 'danger' : 'basic'"
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                />
+                <ng-container *ngIf="submitted && f.total_biaya.errors">
+                  <p class="caption status-danger" *ngIf="f.total_biaya.errors.required">
+                    Please enter total biaya.
+                  </p>
+                </ng-container>
+              </div> 
+              <div class="form-control-group">
+                <label class="label">
+                  Total Sisa Biaya Kurang
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput 
+                  fullWidth
+                  readonly
+                  currencyMask 
+                  formControlName="total_sisa_biaya_kurang" 
+                  [status]="submitted && f.total_sisa_biaya_kurang.errors  ? 'danger' : 'basic'"
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                />
+                <ng-container *ngIf="submitted && f.total_sisa_biaya_kurang.errors">
+                  <p class="caption status-danger" *ngIf="f.total_sisa_biaya_kurang.errors.required">
+                    Please enter total sisa biaya kurang.
+                  </p>
+                </ng-container>
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  NIT
+                  <span class="caption status-danger">*</span>
+                </label>   
+                <input nbInput 
+                  fullWidth
+                  readonly
+                  currencyMask 
+                  formControlName="nit" 
+                  [status]="submitted && f.nit.errors  ? 'danger' : 'basic'"
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                />
+                <ng-container *ngIf="submitted && f.nit.errors">
+                  <p class="caption status-danger" *ngIf="f.nit.errors.required">
+                    Please enter nit.
+                  </p>
+                </ng-container>   
+              </div>  
+              <div class="form-control-group">
+                <label class="label">
+                  Keterangan
+                  <span class="caption status-danger">*</span>
+                </label>             
+                <textarea 
+                  nbInput 
+                  fullWidth  
+                  rows="3"
+                  readonly
+                  formControlName="keterangan" 
+                  placeholder="Enter keterangan"
+                  [status]="submitted && f.keterangan.errors  ? 'danger' : 'basic'"
+                  >
+                </textarea> 
+                <ng-container *ngIf="submitted && f.keterangan.errors">
+                  <p class="caption status-danger" *ngIf="f.keterangan.errors.required">
+                    Please enter keterangan.
+                  </p>
+                </ng-container>
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Tanggal Terima
+                  <span class="caption status-danger">*</span>
+                </label>              
+                <input
+                  fullWidth
+                  readonly
+                  nbInput
+                  ngModel
+                  name="range"
+                  formControlName='tanggal_terima'
+                  [nbDatepicker]="tanggal_terima"
+                  placeholder="Enter Tanggal Terima" 
+                  [status]="submitted && f.tanggal_terima.errors  ? 'danger' : 'basic'"
+                />              
+                <nb-datepicker #tanggal_terima></nb-datepicker>
+                <ng-container *ngIf="submitted && f.tanggal_terima.errors">
+                  <p class="caption status-danger" *ngIf="f.tanggal_terima.errors.required">
+                    Please select Tanggal Terima.
+                  </p>
+                </ng-container>   
+              </div>
+              <div class="form-control-group">
+                <label class="label">
+                  Tanggal Transfer
+                  <span class="caption status-danger">*</span>
+                </label>              
+                <input
+                  fullWidth
+                  readonly
+                  nbInput
+                  ngModel
+                  name="range"
+                  formControlName='tanggal_transfer'
+                  [nbDatepicker]="tanggal_transfer"
+                  placeholder="Enter Tanggal Terima" 
+                  [status]="submitted && f.tanggal_transfer.errors  ? 'danger' : 'basic'"
+                />              
+                <nb-datepicker #tanggal_transfer></nb-datepicker>
+                <ng-container *ngIf="submitted && f.tanggal_transfer.errors">
+                  <p class="caption status-danger" *ngIf="f.tanggal_transfer.errors.required">
+                    Please select Tanggal Terima.
+                  </p>
+                </ng-container>   
+              </div>            
+              <div class="form-control-group">
+                <span class="label-status">
+                  <label class="label" for="input-password">
+                    Type Pembayaran 
+                    <span class="caption status-danger">*</span>
+                  </label>
+                </span>          
+                <nb-radio-group status="success" formControlName="type_pembayaran" class="d-flex" [(ngModel)]="type_form" >
+                  <nb-radio
+                    value="transfer">
+                    Transfer
+                  </nb-radio>
+                  <nb-radio
+                    value="tunai">
+                    Tunai
+                  </nb-radio>
+                </nb-radio-group>
+                <ng-container *ngIf="submitted && f.type_pembayaran.errors">
+                  <p class="caption status-danger" *ngIf="f.type_pembayaran.errors.required">
+                    Please select type.
+                  </p>
+                </ng-container>  
+              </div>     
+            </div>
+            <div class="col-xl-4">    
+              <div class="form-control-group">
+                <label class="label">
+                  Kode Kwitansi
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput
+                      fullWidth
+                      formControlName="kode_kwitansi" 
+                      name="kode_kwitansi"
+                      placeholder="Enter kode kwitansi"
+                      fieldSize="medium"
+                      [status]="submitted && f.kode_kwitansi.errors  ? 'danger' : 'basic'"
+                >      
+                <ng-container *ngIf="submitted && f.kode_kwitansi.errors">
+                  <p class="caption status-danger" *ngIf="f.kode_kwitansi.errors.required">
+                    Please enter kode kwitansi.
+                  </p>
+                </ng-container>   
+              </div>     
+              <div class="form-control-group">
+                <label class="label">
+                  Keterangan Pembayaran
+                  <span class="caption status-danger">*</span>
+                </label>             
+                <textarea 
+                  nbInput 
+                  fullWidth  
+                  rows="3"
+                  formControlName="keterangan_pembayaran" 
+                  placeholder="Enter keterangan pembayaran"
+                  [status]="submitted && f.keterangan_pembayaran.errors  ? 'danger' : 'basic'"
+                  >
+                </textarea> 
+                <ng-container *ngIf="submitted && f.keterangan_pembayaran.errors">
+                  <p class="caption status-danger" *ngIf="f.keterangan_pembayaran.errors.required">
+                    Please enter keterangan pembayaran.
+                  </p>
+                </ng-container>  
+              </div>           
+              <div class="form-control-group">
+                <label class="label">
+                  Cicilan Ke
+                  <span class="caption status-danger">*</span>
+                </label>
+                <nb-select 
+                  class="form-control" 
+                  formControlName="cicilan" 
+                  [status]="submitted && f.cicilan.errors  ? 'danger' : 'basic'"
+                  placeholder="Select cicilan">
+                  <nb-option *ngFor="let item of listBulan" value="{{item}}">
+                    {{ item }}
+                  </nb-option>
+                </nb-select>   
+                <ng-container *ngIf="submitted && f.cicilan.errors">
+                  <p class="caption status-danger" *ngIf="f.cicilan.errors.required">
+                    Please select cicilan.
+                  </p>
+                </ng-container>   
+              </div> 
+              <div class="form-control-group">
+                <label class="label">
+                  Total Bayar
+                  <span class="caption status-danger">*</span>
+                </label>   
+                <input nbInput 
+                  fullWidth
+                  currencyMask 
+                  formControlName="total_bayar" 
+                  [(ngModel)]="total_bayar"
+                  (ngModelChange)="onKeyChange($event)" 
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                  [status]="submitted && f.total_bayar.errors  ? 'danger' : 'basic'"
+                />
+                <ng-container *ngIf="submitted && f.total_bayar.errors">
+                  <p class="caption status-danger" *ngIf="f.total_bayar.errors.required">
+                    Please select total bayar.
+                  </p>
+                </ng-container>   
+              </div>    
+              <div class="form-control-group">
+                <label class="label">
+                  bayar NIT
+                  <span class="caption status-danger">*</span>
+                </label> 
+                <input nbInput 
+                  fullWidth
+                  currencyMask 
+                  formControlName="bayar_nit" 
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                  [status]="submitted && f.bayar_nit.errors  ? 'danger' : 'basic'"
+                />
+                <ng-container *ngIf="submitted && f.bayar_nit.errors">
+                  <p class="caption status-danger" *ngIf="f.bayar_nit.errors.required">
+                    Please enter nit.
+                  </p>
+                </ng-container>   
+              </div>  
+              <div class="form-control-group">
+                <label class="label">
+                  Biaya Kurang
+                  <span class="caption status-danger">*</span>
+                </label>
+                <input nbInput 
+                  readonly
+                  fullWidth
+                  currencyMask 
+                  formControlName="biaya_kurang" 
+                  [status]="submitted && f.biaya_kurang.errors  ? 'danger' : 'basic'"
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                />
+                <ng-container *ngIf="submitted && f.biaya_kurang.errors">
+                  <p class="caption status-danger" *ngIf="f.biaya_kurang.errors.required">
+                    Please enter biaya kurang.
+                  </p>
+                </ng-container>
+              </div>    
+            </div>       
+          </div>
+    </div>
+    <hr>
+    <label class="history">
+      History Pembayaran
+    </label>
+    <div class="row">
+      <div class="col-6">
+        <div class="table-wrapper">
+          <table class="table table-striped">
+            <thead>
+              <th>Tanggal</th>
+              <th>Bulan</th>
+              <th class="text-center">Jumlah</th>
+            </thead>
+        
+            <tbody *ngIf="isLoadData">
+              <tr *ngFor="let item of [0, 1, 2, 3]">
+                <td *ngFor="let td of [0, 1, 2]">
+                  <ngx-skeleton-loader
+                    count="1"
+                    [theme]="{ height: '30px','border-radius': '10px' }"
+                  ></ngx-skeleton-loader>
+                </td>
+              </tr>
+            </tbody>
+        
+            <tbody *ngIf="!isLoadData">
+              <tr *ngIf="dataTable.length == 0">
+                <td colspan="7" class="text-center">
+                  Belum melakukan pembayaran
+                </td>
+              </tr>
+        
+              <tr *ngFor="let item of dataTable">
+                <td>{{ item.tanggal_terima  | date:'d MMM, y, h:mm:ss a'}}</td>                
+                <td>{{ item.cicilan}}</td>
+                <td>
+                  <input nbInput 
+                  fullWidth
+                  readonly
+                  currencyMask 
+                  [value]="item.total_bayar" 
+                  [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                />
+                </td>
+              </tr>
+              <tr *ngIf="total_pembayaran!=0">
+                <td><b>Total Bayar</b></td>
+                <td></td>
+                <td>
+                  <input nbInput 
+                    fullWidth
+                    readonly
+                    currencyMask 
+                    [value]="total_pembayaran" 
+                    [options]="{ prefix: 'Rp ', thousands: '.', precision : '0' }"
+                  />
+                </td>
+                <!-- <td colspan="7" class="text-center">            
+                  
+                </td> -->
+              </tr>
+            </tbody> 
+          </table>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="text-right mb-5">
+          <button class="btn btn-primary mr-2" 
+            type="button"
+            (click)="onSubmit()"
+            [nbSpinner]="submitLoading" 
+            [disabled]="submitLoading">
+            <div *ngIf="type === 'Edit'">
+              {{ submitLoading ? "" : "Update" }}
+            </div>
+            <div *ngIf="type === 'Add'">
+              {{ submitLoading ? "" : "Bayar" }}
+            </div>
+          </button>
+          <button *ngIf="type === 'Edit'" class="btn btn-primary" 
+            (click)="onPrintDirect()"
+            [disabled]="submitLoading">
+            Cetak
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>      
+</div>
+
+<div id="abc" [hidden]="!showPrint">
+  <div class="card">
+    <div class="card-header">
+      <div class="row mb-0">
+        <div class="col-6"> 
+          <img src="https://www.prosusinten.org/img/logo_inten.png">
+        </div>
+        <div class="col-6 text-right date"> 
+          Tanggal Cetak : {{printDate | date:'d MMM, y, h:mm:ss a'}}
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="text-center">UANG BIAYA SISWA</h3>
+      <hr class="mb-5">
+      <div class="wrapper">
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">Nama :</div>
+            <div class="content">{{detailSiswa.nama}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Wali Kelas :</div>
+            <div class="content">{{detailSiswa.wali_kelas}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">NIS :</div>
+            <div class="content">{{detailSiswa.nis}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Tanggal Masuk :</div>
+            <div class="content">{{detailSiswa.tanggal_masuk | date:'d MMM, y, h:mm:ss a'}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">Asal Sekolah :</div>
+            <div class="content">{{detailSiswa.sekolah}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Total Biaya :</div>
+            <div class="content"><b>Rp {{ detailSiswa.total_biaya | number:'1.0-2' }}</b></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">Lokasi Belajar :</div>
+            <div class="content">{{detailSiswa.cabang}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Keterangan :</div>
+            <div class="content">{{detailSiswa.keterangan}}</div>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-4"> 
+            <div class="title">Kelas (di Inten) :</div>
+            <div class="content">{{detailSiswa.kelas_inten}}</div>
+          </div>
+          <div class="col-4"> 
+          </div>
+        </div>  
+      </div>
+
+      <div class="row">
+        <div class="col-12"> 
+          <div class="table-wrapper">
+            <table class="table table-striped">
+              <thead>
+                <th width="33.5%">Tanggal Bayar</th>
+                <th>Cicilan Bulan</th>
+                <th class="text-right">Jumlah Bayar</th>
+              </thead>
+
+              <tbody *ngIf="!isLoadData">
+                <tr *ngIf="dataTable.length == 0">
+                  <td colspan="7" class="text-center">
+                    Belum melakukan pembayaran
+                  </td>
+                </tr>
+
+                <tr *ngFor="let item of dataTable">
+                  <td>
+                    {{item.tanggal_terima | date:'d MMM, y, h:mm:ss a'}}
+                  </td>
+                  <td>{{ item.cicilan}}</td>
+                  <td class="text-right">
+                    <b>Rp {{ item.total_bayar | number:'1.0-2' }}</b>
+                  </td>
+                </tr>
+                <tr *ngIf="total_pembayaran!=0">
+                  <td><b>Total yang sudah dibayar</b></td>
+                  <td></td>
+                  <td class="text-right">
+                    <b>Rp {{ total_pembayaran | number:'1.0-2' }}</b>
+                  </td>
+                </tr>
+                <tr *ngIf="total_pembayaran!=0">
+                  <td><b>Biaya Kurang</b></td>
+                  <td></td>
+                  <td class="text-right">
+                    <b>Rp {{ sisa_biaya_kurang | number:'1.0-2' }}</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">      
+      <div class="row">
+        <div class="col-xl-12 text-center">
+          <h5>
+            "Terima Kasih"
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

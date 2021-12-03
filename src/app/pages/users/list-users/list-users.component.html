@@ -1,0 +1,191 @@
+
+<div class="d-flex mb-4 align-items-center">
+  <h5 class="title">Users</h5>
+  <div class="ml-3"><button class="btn btn-primary" (click)="addUser()">Add Record</button></div>
+</div>  
+<div class="table-wrapper">
+  <div class="filter-bar d-flex align-items-center justify-content-between">
+    <div class="form-control-group field-search">
+      <label>Search</label>
+      <input type="text" class="form-control" nbInput 
+        [(ngModel)]="page.search"
+        (ngModelChange)="onKeyChange($event)" 
+        (keydown.enter)="onSearch(page.search)"
+        placeholder="Search by users">
+      <button type="button" nbButton (click)="clearSearch()" [ngClass]="btnSearchClose"></button>
+    </div>
+  </div>
+  
+  <div class="table-responsive">
+    <ngx-datatable #dataTable *ngIf="!isLoadData"
+      style="width: 100%"
+      class="table"
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="60"
+      [footerHeight]="50"
+      rowHeight="auto"
+
+      [selected]="selectedRowData"
+      [selectionType]="'checkbox'"
+      (select)="onSelect($event)"
+      [messages]="{emptyMessage: 'Data not found.'}"
+      
+      [scrollbarH]="true"
+      [externalPaging]="true"
+      [externalSorting]="true"
+      [sortType]="'single'"
+      [count]="page.totalItems"
+      [offset]="page.pageNumber"
+      [limit]="page.pageLimit"
+      (page)="setPage($event)"
+      (sort)="setSort($event)">
+
+      <ngx-datatable-column name="Nama" [width]="250" prop="name">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('name')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">Nama</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'name' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'name' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.name }}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Email" [width]="200" prop="email">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('email')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">Email</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'email' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'email' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.email ? row.email : '-' }}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Alamat" [width]="250" prop="alamat">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('alamat')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">Alamat</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'alamat' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'alamat' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.alamat ? row.alamat : '-' }}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="No.Tlp" [width]="250" prop="no_tlp">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('no_tlp')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">No.Tlp</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'no_tlp' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'no_tlp' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.no_tlp ? row.no_tlp : '-'  }}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Cabang" [width]="250" prop="cabang">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('cabang')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">Cabang</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'cabang' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'cabang' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.cabang }}</div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Role" [width]="100" prop="role">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('role')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">Role</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'role' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'role' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.role }}</div>
+        </ng-template>
+      </ngx-datatable-column>    
+      <ngx-datatable-column name="No Induk" [width]="200" prop="no_induk">
+        <ng-template ngx-datatable-header-template="ngx-datatable-header-template">
+          <div class="custom-sort" (click)="sortBy('no_induk')">
+            <span class="datatable-header-cell-wrapper mr-2">
+              <span class="datatable-header-cell-label draggable">No. Induk</span>
+            </span>
+            <nb-icon *ngIf="page.orderBy == 'no_induk' && page.orderDir == 'ASC'" icon="arrow-up"></nb-icon>
+            <nb-icon *ngIf="page.orderBy == 'no_induk' && page.orderDir == 'DESC'" icon="arrow-down"></nb-icon>
+          </div>
+        </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div>{{ row.no_induk }}</div>
+        </ng-template>
+      </ngx-datatable-column>  
+      <ngx-datatable-column name="Status" [width]="180">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span [ngClass]="row.is_active? 'status green' : 'status red'">{{ row.is_active ? "ACTIVE" : "SUSPENDED" }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column [width]="350">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div class="text-right action-btns">
+            <button type="button" class="btn btn-text purple" (click)="editUser(row)">
+              <nb-icon icon="edit-2-outline"></nb-icon> Edit
+            </button>
+            <button type="button" class="btn btn-text red" (click)="deleteUser(row)">
+              <nb-icon icon="trash-2-outline"></nb-icon> Delete
+            </button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-footer>
+        <ng-template
+          ngx-datatable-footer-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset">
+          
+          <div class="page-count ng-star-inserted" *ngIf="page.totalItems > 0">
+            <div style="padding: 5px 10px">
+              {{ curPage }} of {{ page.totalPages }} pages | {{ page.totalItems }} records
+            </div>
+          </div>
+          <datatable-pager *ngIf="page.totalPages > 1"
+            [pagerLeftArrowIcon]="'datatable-icon-left'"
+            [pagerRightArrowIcon]="'datatable-icon-right'"
+            [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'"
+            [page]="curPage"
+            [size]="pageSize"
+            [count]="rowCount"
+            (change)="dataTable.onFooterPage($event)">
+          </datatable-pager>
+        </ng-template>
+      </ngx-datatable-footer>      
+    </ngx-datatable>
+    <div class="skeleton-table pt-5" *ngIf="isLoadData && !isNotFound">
+      <ngx-skeleton-loader class="d-flex" style="margin-left: -10px; margin-right: -10px" count="5" [theme]="{ height: '30px', 'border-radius': '10px', 'margin': '0 10px 35px'}"></ngx-skeleton-loader>
+      <ngx-skeleton-loader count="5" [theme]="{ height: '30px', 'border-radius': '10px', 'margin-bottom': '30px' }"></ngx-skeleton-loader>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {    
+    .password-field-group {
+        position: relative;
+    
+        .eyetrigger {
+            position: absolute;
+            top: 50%;
+            right: 0.25rem;
+    
+            @include nb-rtl() {
+                right: unset;
+                left: 0.25rem;
+            }
+    
+            ;
+            transform: translateY(-50%);
+            }
+    
+            .eyetrigger:focus,
+            .eyetrigger:active {
+                border: none;
+                box-shadow: none;
+                background: inherit;
+                
+        }
+    }
+}

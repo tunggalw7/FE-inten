@@ -1,0 +1,120 @@
+label{
+    font-weight: bold;
+}
+.title{
+    padding-top: 2em;
+    padding-bottom: 5em;
+    text-align: center;
+    font-weight: bold;
+}
+.filter-bar{    
+    margin-bottom: 0;
+}
+.filter-area{
+    display: flex;
+    .form-control-group{
+        width: 15em;
+        margin: 0;
+    }
+}
+
+nb-card-header.panel{
+    background-color: #ff3d71;
+    .button-panel{
+        display: flex;
+        padding: 0.5em;
+        font-size: 14px;
+    
+        span{
+            padding: 0.5em;            
+            margin: 0 1em;
+            color: #fff;
+            cursor: pointer;
+            &.active{
+                background-color: #f782a1;
+                border-radius: 2px;
+                // border: solid ;
+            }
+        }
+    }
+}
+.icon-badge{    
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
+nb-card-header{
+    // display: flex;
+    // justify-content: space-between;
+}
+
+.table-wrapper table {    
+    border: solid 1px #D8DADB;
+    thead{
+        th{            
+            border-width: 0 0 1px 0;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 1rem;
+            line-height: 17px;
+            background: transparent;
+            border-bottom: solid 1px #D8DADB;
+            text-align: center;
+            border-right: solid 1px #D8DADB;
+        }
+    }
+    tbody{
+        tr{
+            td{                
+                padding: 1rem;
+                color: #000000;
+                font-size: 14px;
+                border-width: 0 0 1px 0;
+                border-bottom: thin solid #D8DADB;
+                vertical-align: middle !important;
+                border-right: solid 1px #D8DADB;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.event{
+    display: flex;
+    .nb-icon-event{        
+        font-size: 40px;
+    }
+    .event-icon{
+        background-color: #598bff;
+        border-radius: .357rem;
+        color: #FFF;
+        padding: 0.5em;
+        margin-right: 1em;
+    }
+    .event-details{        
+        display: inline-grid;
+        line-height: 2em;
+        a{
+            text-decoration: unset;
+        }
+    }
+    span{        
+        color: #5C656B;
+        font-weight: 700;
+        font-size: 30px;
+    }
+    small{        
+        font-size: 18px;
+    }
+}
+
+.tab{
+    margin-right: 1em;
+    padding-bottom: 0.3em;
+    opacity: 0.5;
+    &.active{
+        border-bottom: solid #598bff 3px;
+        opacity: 1;
+    }
+}

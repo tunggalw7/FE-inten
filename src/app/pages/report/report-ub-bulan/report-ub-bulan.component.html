@@ -1,0 +1,201 @@
+
+<div class="d-flex mb-4 align-items-center">
+  <h5 class="title">Report UB bulanan</h5>
+</div>  
+<div class="table-wrapper">
+  <div class="row">
+    <div class="col-4">    
+      <div class="form-control-group">
+        <label class="label">
+          Cabang
+        </label>
+        <nb-select                   
+          class="form-control" 
+          [(ngModel)]="cabang"
+          (ngModelChange)="getData()"
+          placeholder="Select cabang">
+          <nb-option *ngFor="let item of listCabang" value="{{item.nama_cabang}}">
+            {{ item.nama_cabang }}
+          </nb-option>
+        </nb-select>     
+      </div>  
+    </div>
+    <div class="col-4">
+      <div class="form-control-group">
+        <label class="label">
+          Kelas (Inten)
+        </label>
+        <nb-select 
+          class="form-control" 
+          [(ngModel)]="kelas"
+          (ngModelChange)="getData()"
+          placeholder="Select kelas">
+          <nb-option *ngFor="let item of listKelas" value="{{item.nama_kelas}}">
+            {{ item.nama_kelas }}
+          </nb-option>
+        </nb-select>   
+      </div>           
+    </div>
+    <div class="col-4"> 
+      <div class="form-control-group with-icon">
+        <label class="label">
+          Bulan
+        </label>
+        <input nbInput
+          fullWidth
+          name="range"
+          placeholder="Filter By Tanggal"
+          fieldSize="large"
+          [nbDatepicker]="formpicker"
+          [(ngModel)]="tanggal"
+          (ngModelChange)="getData()"
+        >    
+        <nb-rangepicker #formpicker></nb-rangepicker>  
+        <nb-icon icon="calendar-outline"></nb-icon>   
+      </div>      
+    </div>
+    <div class="col-12">
+      <div class="text-right">
+        <button class="btn btn-primary" 
+          (click)="onPrintDirect()">
+          Cetak
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="data-ub" class="table-wrapper">
+    <h5 class="text-center">LAPORAN MINGGUAN/BULANAN PEMASUKAN DANA</h5>
+    <h5 class="text-center mb-5">KELAS {{kelas}} TAHUN AJARAN {{tahun_ajaran}}</h5>
+    <div class="row mb-2">
+      <div class="col-3">
+        Cabang  
+      </div>
+      <div class="col-4">
+        : &nbsp;&nbsp;&nbsp;<b>{{ cabang }}</b>
+      </div>
+    </div>
+    <div class="row mb-5">
+      <div class="col-3">
+        Bulan 
+      </div>
+      <div class="col-4">
+        : &nbsp;&nbsp;&nbsp;{{ namaBulan }} {{ tahun }}
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th rowspan="2" class="text-center">No.</th>
+          <th rowspan="2" class="text-center">Nama</th>
+          <th rowspan="2" class="text-center">Sekolah</th>
+          <th rowspan="2" class="text-center">Kelas</th>
+          <th rowspan="2" class="text-center">Kode Kwitansi</th>
+          <th rowspan="2" class="text-center">Cicilan</th>
+          <th rowspan="2" class="text-center">Tanggal Terima</th>
+          <th class="text-center" colspan="2">Transfer</th>
+          <th rowspan="2" class="text-center">Real Transfer</th>
+          <th rowspan="2" class="text-center">Jumlah</th>
+          <th rowspan="2" class="text-center">NIT</th>
+        </tr>
+        <tr>
+          <th class="text-center">Tanggal</th>
+          <th class="text-center">Keterangan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="rows.length == 0">
+          <td colspan="12" class="text-center">
+            Tidak ada data.
+          </td>
+        </tr>                  
+        <tr *ngFor="let item of rows; let i = index">
+          <td>{{ i+1 }}</td>
+          <td>{{ item.nama}}</td>
+          <td>{{ item.sekolah}}</td>
+          <td>{{ item.kelas_inten}}</td>
+          <td>{{ item.kode_kwitansi}}</td>
+          <td>{{ item.cicilan}}</td>
+          <td>{{ item.tanggal_terima | date:'d MMM, y'}}</td>
+          <td>{{ item.tanggal_transfer | date:'d MMM, y'}}</td>
+          <td>{{ item.keterangan}}</td>
+          <td class="text-right">Rp {{ item.total_bayar | number:'1.0-2' }}</td>
+          <td class="text-right">Rp {{ item.total_bayar | number:'1.0-2' }}</td>
+          <td class="text-right">Rp {{ item.nit | number:'1.0-2' }}</td>
+        </tr>
+        <tr *ngIf="total_pembayaran!=0 && rows.length > 0">
+          <td colspan="2"><b>Total Bayar</b></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td class="text-right">
+            Rp {{ total_pembayaran | number:'1.0-2' }}
+          </td>
+          <td></td>
+          <!-- <td colspan="7" class="text-center">            
+            
+          </td> -->
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary" (click)="exportexcel()">Export To Excel</button>
+    <div id="excel-table">
+      <h5 class="text-center">Data  Realisasi  Pembayaran Uang Bimbingan  PROSUS  INTEN MALANG CAB. WELIRANG</h5>
+      <h5 class="text-center mb-5">Kelas 3 Reguler Tahun Ajaran Baru Periode 2020 - 2021</h5>
+      <table class="table table-striped"> 
+        <thead>
+          <tr>       
+            <th>NIS</th> 
+            <th>Nama</th>  
+            <th>Total Biaya</th> 
+            <th>Januari</th>   
+            <th>Feburari</th>   
+            <th>Maret</th>   
+            <th>April</th>   
+            <th>Mei</th>   
+            <th>Juni</th>   
+            <th>Juli</th>  
+            <th>Agustus</th> 
+            <th>September</th> 
+            <th>Oktober</th> 
+            <th>November</th>  
+            <th>Desember</th>  
+          </tr>            
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ListBiayaTahunan">
+            <td>{{ item.nis }}</td>  
+            <td>{{ item.nama }}</td>  
+            <td>{{ item.total_biaya }}</td>  
+            <td>{{ item.januari }}</td>  
+            <td>{{ item.februari }}</td>  
+            <td>{{ item.maret }}</td>  
+            <td>{{ item.april }}</td>  
+            <td>{{ item.mei }}</td>  
+            <td>{{ item.juni }}</td>  
+            <td>{{ item.juli }}</td>  
+            <td>{{ item.agustus }}</td>  
+            <td>{{ item.september }}</td>  
+            <td>{{ item.oktober }}</td>  
+            <td>{{ item.november }}</td>  
+            <td>{{ item.desember }}</td>  
+          </tr> 
+          <tr>       
+            <td class="text-right" colspan="3">100000</td> 
+            <td class="text-right">100000</td> 
+            <td class="text-right">200000</td> 
+            <td class="text-right">300000</td> 
+            <td class="text-right">400000</td> 
+            <td class="text-right">500000</td> 
+            <td class="text-right">100000</td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>  
+  
+</div>

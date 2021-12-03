@@ -1,0 +1,37 @@
+
+  ::ng-deep .siswa-form-select{
+    font-weight: 400;
+    border-color: #e4e9f2;
+    .select2-container .select2-selection--single, .select2-container--default .select2-selection--single .select2-selection__arrow{
+      height: 48px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__rendered{
+      background-color: #FAFAFA;
+      line-height: 48px;
+      height: 45px;
+      padding: 0 1em;
+      &:focus{
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid #745D98;
+      }
+    }
+    .select2-hidden-accessible:disabled{
+      ~.select2-container--default{
+        .select2-selection--single{
+          border-color: #e4e9f2 !important;
+          .select2-selection__rendered{
+            background-color: #e9eaeb;
+          }
+        } 
+      }
+    }
+    .select2-container--default .select2-selection--single{
+      border: 1px solid #e4e9f2;
+      &:focus{
+        outline: none;
+        border-radius: 4px;
+        border: 1px solid #745D98;
+      }
+    }
+  }

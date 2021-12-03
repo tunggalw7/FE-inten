@@ -1,0 +1,31 @@
+
+    .password-field-group {
+        position: relative;
+    
+        .eyetrigger {
+            position: absolute;
+            top: 50%;
+            right: 0.25rem;
+                
+            transform: translateY(-50%);
+            }
+    
+            .eyetrigger:focus,
+            .eyetrigger:active {
+                border: none;
+                box-shadow: none;
+                background: inherit;
+                
+        }
+    }
+
+    .history{
+        font-weight: bold;
+    }
+
+    #assessmentReport-container{
+        // display: none;
+        visibility : hidden
+    }
+
+    

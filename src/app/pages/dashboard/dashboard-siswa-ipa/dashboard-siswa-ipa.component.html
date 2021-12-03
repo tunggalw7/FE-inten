@@ -1,0 +1,481 @@
+<div class="row">
+  <div class="col-xl-4">
+    <nb-card size="large">
+      <nb-card-header class="text-center">
+        <h3>{{currentUser.name}}</h3>
+        <div>{{detailSiswa.sekolah}} - {{kelas}}</div>
+      </nb-card-header>
+      <nb-card-body>
+        <div echarts [options]="chartAbsen" class="echart"></div>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+  <div class="col-xl-8">
+    <nb-card size="large">
+      <nb-card-header>
+        Grafik Perkembangan Try Out 
+      </nb-card-header>
+      <nb-card-body>        
+        <div *ngIf="options != null" class="form-control-group text-center">
+          <nb-button-group size="small">
+            <button [ngClass]="{'btn btn-group': type === 'TOTAL'}" class="btn btn-group" pressed (click)="onChangeMenu('TOTAL')" nbButtonToggle>TOTAL NILAI</button>
+            <button [ngClass]="{'btn btn-group': type === 'PU'}" (click)="onChangeMenu('PU')" nbButtonToggle>TPS-PU</button>
+            <button [ngClass]="{'btn btn-group': type === 'PBM'}" (click)="onChangeMenu('PBM')" nbButtonToggle>TPS-PBM</button>
+            <button [ngClass]="{'btn btn-group': type === 'PPU'}" (click)="onChangeMenu('PPU')" nbButtonToggle>TPS-PPU</button>
+            <button [ngClass]="{'btn btn-group': type === 'PK'}" (click)="onChangeMenu('PK')" nbButtonToggle>TPS-PK</button>
+            <button [ngClass]="{'btn btn-group': type === 'MM'}" (click)="onChangeMenu('MM')" nbButtonToggle>TKA-MM</button>
+            <button [ngClass]="{'btn btn-group': type === 'FIS'}" (click)="onChangeMenu('FIS')" nbButtonToggle>TKA-FIS</button>
+            <button [ngClass]="{'btn btn-group': type === 'KIM'}" (click)="onChangeMenu('KIM')" nbButtonToggle>TKA-KIM</button>
+            <button [ngClass]="{'btn btn-group': type === 'BIO'}" (click)="onChangeMenu('BIO')" nbButtonToggle>TKA-BIO</button>
+          </nb-button-group>
+          <div echarts [options]="options" class="echart mt-3"></div>
+        </div>
+        <nb-card *ngIf="options == null">
+          <div class="subcontent-card">
+            <div class="card-body">
+              <table class="no-data">
+                <tr class="item no-data" >
+                  <td colspan="4" class="text-center">
+                    <img src="../../../../assets/images/icon-no-data.svg" />
+                    <p>
+                      Data tidak di temukan
+                    </p>
+                  </td>
+                </tr>
+                <tr class="spacer"></tr>
+              </table>
+            </div>
+          </div> 
+        </nb-card>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-4">
+    <nb-card size="large">
+      <nb-card-header class="d-flex">
+        <div (click)="typeEventSoal('events')" class="tab" [ngClass]="{'active': typeTabs === 'events'}">
+          Timeline events
+        </div>
+        <div (click)="typeEventSoal('soal')" class="tab" [ngClass]="{'active': typeTabs === 'soal'}">
+          Download Soal TO
+        </div>
+      </nb-card-header>
+      <nb-card-body class="mt-2">
+        <div *ngIf="typeTabs === 'events'">
+          <div *ngFor="let item of listEvent" class="event align-items-center mb-4">
+            <div class="event-icon">
+              <nb-icon class="nb-icon-event" icon="calendar-outline"></nb-icon>
+            </div>
+            <div class="event-details">
+              <span>{{item.tanggal}}</span>
+              <small>{{item.nama}}</small>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="typeTabs === 'soal'">
+          <div *ngFor="let item of listSoal" class="event align-items-center mb-4">
+            <div class="event-icon">
+              <nb-icon class="nb-icon-event" icon="file-text-outline"></nb-icon>
+            </div>
+            <div class="event-details">
+              <span>
+                <a [href]="item.link" target="_blank">                  
+                  {{item.nama_soal}}
+                 </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+  <div class="col-xl-8">
+    <nb-card size="large">
+      <nb-card-header>
+        Data Semua Try Out 
+      </nb-card-header>
+      <nb-card-body>        
+        <div class="table-wrapper dashboard">          
+          <div class="filter-bar dashboard d-flex align-items-center justify-content-between">
+            <div class="form-control-group field-search">
+              <label>Search</label>
+              <input type="text" class="form-control" nbInput 
+                (keyup)="updateFilter($event)"
+                placeholder="Search tryout">
+              <button type="button" nbButton [ngClass]="btnSearchClose"></button>
+            </div>
+          </div>
+          
+          <div class="table-wrapper">
+            <table class="table table-striped">
+              <thead>
+                <th>Tryout Ke</th>
+                <th>PU</th>
+                <th>PBM</th>
+                <th>PPU</th>
+                <th>PK</th>
+                <th>Matematika</th>
+                <th>Fisika</th>
+                <th>Kimia</th>
+                <th>Biologi</th>
+                <th>Rata-rata</th>
+              </thead>
+              <tbody>
+                <tr *ngIf="rows.length == 0">
+                  <td colspan="10" class="text-center">
+                    Data tidak di temukan
+                  </td>
+                </tr>                  
+                <tr *ngFor="let item of rows">
+                  <td>{{ item.tryout_ke}}</td>
+                  <td>{{ item['PU nr'] }}</td>
+                  <td>{{ item['PBM nr'] }}</td>
+                  <td>{{ item['PPU nr'] }}</td>
+                  <td>{{ item['PK nr'] }}</td>
+                  <td>{{ item['Mtk nr'] }}</td>
+                  <td>{{ item['Fis nr'] }}</td>
+                  <td>{{ item['Kim nr'] }}</td>
+                  <td>{{ item['Bio nr'] }}</td>
+                  <td>{{ item['Total nr'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>   
+        </div>
+      </nb-card-body>
+    </nb-card>    
+  </div>
+  <div class="col-xl-12">
+    <nb-card size="medium">
+      <nb-card-header>
+        Data Absensi Siswa
+      </nb-card-header>
+      <nb-card-body>                
+        <div class="table-wrapper">
+          <table class="table table-striped">
+            <thead>
+              <th></th>
+              <th colspan="2">Juli</th>
+              <th colspan="2">Juli</th>
+              <th colspan="2">Agustus</th>
+              <th colspan="2">September</th>
+              <th colspan="2">Oktober</th>
+              <th colspan="2">November</th>
+              <th colspan="2">Desember</th>
+              <th colspan="2">Januari</th>
+              <th colspan="2">Maret</th>
+              <th colspan="2">April</th>
+              <th colspan="2">Mei</th>
+              <th colspan="2">Juni</th>
+            </thead>
+
+            <tbody>
+              <tr *ngIf="dataAbsensi.length == 0">
+                <td colspan="25" class="text-center">
+                  Data tidak di temukan
+                </td>
+              </tr>
+              <tr>
+                <td>Hadir</td>
+                <td>{{ Juni ? Juni.hadir : '-' }}</td>
+                <td>{{ Juni ? (Juni.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Juli ? Juli.hadir : '-' }}</td>
+                <td>{{ Juli ? (Juli.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Agustus ? Agustus.hadir : '-' }}</td>
+                <td>{{ Agustus ? (Agustus.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ September ? September.hadir : '-' }}</td>
+                <td>{{ September ? (September.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Oktober ? Oktober.hadir : '-' }}</td>
+                <td>{{ Oktober ? (Oktober.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ November ? November.hadir : '-' }}</td>
+                <td>{{ November ? (November.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Desember ? Desember.hadir : '-' }}</td>
+                <td>{{ Desember ? (Desember.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Januari ? Januari.hadir : '-' }}</td>
+                <td>{{ Januari ? (Januari.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Februari ? Februari.hadir : '-' }}</td>
+                <td>{{ Februari ? (Februari.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Maret ? Maret.hadir : '-' }}</td>
+                <td>{{ Maret ? (Maret.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ April ? April.hadir : '-' }}</td>
+                <td>{{ April ? (April.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Mei ? Mei.hadir : '-' }}</td>
+                <td>{{ Mei ? (Mei.persentase | number: '1.0-0') + '%' : '-' }}</td>
+              </tr>
+          
+              <tr>
+                <td>Alpha</td>
+                <td>{{ Juni ? Juni.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Juli ? Juli.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Agustus ? Agustus.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ September ? September.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Oktober ? Oktober.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ November ? November.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Desember ? Desember.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Januari ? Januari.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Februari ? Februari.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Maret ? Maret.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ April ? April.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Mei ? Mei.absen : '-' }}</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>Izin</td>
+                <td>{{ Juni ? Juni.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Juli ? Juli.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Agustus ? Agustus.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ September ? September.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Oktober ? Oktober.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ November ? November.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Desember ? Desember.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Januari ? Januari.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Februari ? Februari.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Maret ? Maret.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ April ? April.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Mei ? Mei.izin : '-' }}</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>Sakit</td>
+                <td>{{ Juni ? Juni.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Juli ? Juli.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Agustus ? Agustus.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ September ? September.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Oktober ? Oktober.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ November ? November.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Desember ? Desember.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Januari ? Januari.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Februari ? Februari.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Maret ? Maret.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ April ? April.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Mei ? Mei.sakit : '-' }}</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card> 
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">  
+    <nb-card size="large">
+      <nb-card-header>       
+        <span>Quiz Per Mata Pelajaran</span>
+      </nb-card-header>
+      <nb-card-body>      
+        <div class="row">
+          <div class="col-xl-6">
+            <nb-card size="large">
+              <nb-card-header>     
+                <div class="filter-area">                                            
+                  <div class="form-control-group">
+                    <label class="label">
+                      Filter By Month
+                    </label>
+                    <nb-select class="form-control" 
+                      placeholder="Filter By Month"
+                      [(ngModel)]="monthQuizLine"
+                      (ngModelChange)="getNilaiQuiz()"
+                      >
+                      <nb-option *ngFor="let item of month" value="{{ item.value }}">
+                        {{ item.name }}
+                      </nb-option>
+                    </nb-select>    
+                  </div>  
+                  <div class="form-control-group ml-3">
+                    <label class="label">
+                      Filter By Mata Pelajaran
+                    </label>
+                    <nb-select class="form-control" 
+                      placeholder="Filter By Mata Pelajaran"
+                      [(ngModel)]="matpelQuizLine"
+                      (ngModelChange)="getNilaiQuiz()">
+                      <nb-option *ngFor="let item of listMatpel" value="{{ item.nama_mata_pelajaran }}">
+                        {{ item.nama_mata_pelajaran }}
+                      </nb-option>
+                    </nb-select>    
+                  </div>
+                </div>  
+              </nb-card-header>
+              <nb-card-body>  
+                <div echarts [options]="optionNilaiQuiz" class="echart"></div>              
+              </nb-card-body>
+            </nb-card>              
+          </div>
+          <div class="col-xl-6">
+            <nb-card size="large">
+              <nb-card-header>     
+                <div class="filter-area">                                                              
+                  <div class="form-control-group with-icon">
+                    <label class="label">
+                      Filter By Tanggal 
+                    </label>
+                    <input nbInput
+                      fullWidth
+                      name="range"
+                      placeholder="Filter By Tanggal"
+                      fieldSize="large"
+                      [nbDatepicker]="formpicker"
+                      [(ngModel)]="tanggalQuizTable"
+                      (ngModelChange)="getQuizPerMatpel()"
+                    >    
+                    <nb-rangepicker #formpicker></nb-rangepicker>   
+                    <nb-icon icon="calendar-outline"></nb-icon>
+                  </div>
+                  <div class="form-control-group ml-3">
+                    <label class="label">
+                      Filter By Mata Pelajaran
+                    </label>
+                    <nb-select class="form-control" 
+                      placeholder="Filter By Mata Pelajaran"
+                      [(ngModel)]="matpelQuizTable"
+                      (ngModelChange)="getQuizPerMatpel()">
+                      <nb-option *ngFor="let item of listMatpel" value="{{ item.nama_mata_pelajaran }}">
+                        {{ item.nama_mata_pelajaran }}
+                      </nb-option>
+                    </nb-select>    
+                  </div>
+                </div>  
+              </nb-card-header>
+              <nb-card-body>  
+                <div class="table-wrapper">
+                  <table class="table table-striped">
+                    <thead>
+                      <th width="20%">Tanggal</th>
+                      <th>Topik</th>
+                      <th>Pengajar</th>
+                      <th>Benar</th>
+                      <th>Salah</th>
+                      <th>Jumlah Soal</th>
+                      <th>Nilai</th>
+                    </thead>
+                    <tbody>
+                      <tr *ngIf="listQuizPerMatpel.length == 0">
+                        <td colspan="7" class="text-center">
+                          Data tidak di temukan
+                        </td>
+                      </tr>                  
+                      <tr *ngFor="let item of listQuizPerMatpel">
+                        <td>
+                          {{item.tanggal | date:'d MMM, y, h:mm:ss a'}}
+                        </td>
+                        <td>{{ item.topik}}</td>
+                        <td>{{ item.guru}}</td>
+                        <td>{{ item.benar}}</td>
+                        <td>{{ item.salah}}</td>
+                        <td>{{ item.jumlah_soal}}</td>
+                        <td>{{ item.nilai}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>             
+              </nb-card-body>
+            </nb-card>            
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card> 
+  </div>
+</div>
+<div class="row">
+  <div class="col-xl-12">  
+    <nb-card size="medium">
+      <nb-card-header>       
+        <span>Quiz Semua Mata Pelajaran</span>
+      </nb-card-header>
+      <nb-card-body>     
+        <div class="filter-area">                                                                  
+          <div class="form-control-group with-icon">
+            <label class="label">
+              Filter By Tanggal 
+            </label>
+            <input nbInput
+              fullWidth
+              name="range"
+              placeholder="Filter By Tanggal"
+              fieldSize="large"
+              [nbDatepicker]="formpicker2"
+              [(ngModel)]="tanggalAllMatpelTable"
+              (ngModelChange)="getQuizAllMatpel()"
+            >    
+            <nb-rangepicker #formpicker2></nb-rangepicker>  
+            <nb-icon icon="calendar-outline"></nb-icon>
+          </div>    
+        </div>
+        <div class="table-wrapper">
+          <table class="table table-striped">
+            <thead>
+              <th>Tanggal</th>
+              <th>Mata Pelajaran</th>
+              <th>Benar</th>
+              <th>Salah</th>
+              <th>Jumlah Soal</th>
+              <th>Nilai</th>
+              <th>Topik</th>
+              <th>Pengajar</th>
+            </thead>
+            <tbody *ngIf="listQuizAllMatpel">
+              <tr *ngIf="listQuizAllMatpel.length == 0">
+                <td colspan="8" class="text-center">
+                  Data tidak ditemukan
+                </td>
+              </tr>
+              
+              <tr *ngFor="let item of listQuizAllMatpel">
+                <td>
+                  {{item.tanggal | date:'d MMM, y, h:mm:ss a'}}
+                </td>
+                <td>{{ item.mata_pelajaran}}</td>
+                <td>{{ item.benar}}</td>
+                <td>{{ item.salah}}</td>
+                <td>{{ item.jumlah_soal}}</td>
+                <td>{{ item.nilai}}</td>
+                <td>{{ item.topik}}</td>
+                <td>{{ item.guru}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card> 
+  </div>
+</div>

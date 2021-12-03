@@ -1,0 +1,9 @@
+<div *ngIf="dashboardAccess === 'fo' || dashboardAccess === 'Koordinator Cabang'">
+  <dashboard-fo></dashboard-fo>
+</div>
+<div *ngIf="dashboardAccess === 'ipa' || dashboardAccess === 'IPA' || dashboardAccess === 'ALUMNI IPA'">
+  <dashboard-siswa-ipa></dashboard-siswa-ipa>
+</div>
+<div *ngIf="dashboardAccess === 'ips' || dashboardAccess === 'IPS' || dashboardAccess === 'ALUMNI IPS'">
+  <dashboard-siswa-ips></dashboard-siswa-ips>
+</div>

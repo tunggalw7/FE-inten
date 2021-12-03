@@ -1,0 +1,130 @@
+
+<div id="test">
+  <div class="d-flex align-items-center mb-3" style="justify-content: space-between;">
+    <h5 class="title">Uang Biaya Siswa</h5>
+    <button class="btn btn-primary" 
+      (click)="onPrintDirect()">
+      Cetak
+    </button>
+  </div>    
+</div>
+
+<div id="abc">
+  <div class="card">
+    <div class="card-header">
+      <div class="row mb-0">
+        <div class="col-6"> 
+          <img src="https://www.prosusinten.org/img/logo_inten.png">
+        </div>
+        <div class="col-6 text-right date"> 
+          Tanggal Cetak : {{printDate | date:'d MMM, y, h:mm:ss a'}}
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="text-center">UANG BIAYA SISWA</h3>
+      <hr class="mb-5">
+      <div class="wrapper">
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">Nama :</div>
+            <div class="content">{{detailSiswa.nama}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Wali Kelas :</div>
+            <div class="content">{{detailSiswa.wali_kelas}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">NIS :</div>
+            <div class="content">{{detailSiswa.nis}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Tanggal Masuk :</div>
+            <div class="content">{{detailSiswa.tanggal_masuk | date:'d MMM, y, h:mm:ss a'}}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">Asal Sekolah :</div>
+            <div class="content">{{detailSiswa.sekolah}}</div>
+          </div>
+          <div class="col-4"> 
+            <div class="title">Total Biaya :</div>
+            <div class="content"><b>Rp {{ detailSiswa.total_biaya | number:'1.0-2' }}</b></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4"> 
+            <div class="title">Lokasi Belajar :</div>
+            <div class="content">{{detailSiswa.cabang}}</div>
+          </div>
+        </div>
+        <div class="row mb-5">
+          <div class="col-4"> 
+            <div class="title">Kelas (di Inten) :</div>
+            <div class="content">{{detailSiswa.kelas_inten}}</div>
+          </div>
+          <div class="col-4"> 
+          </div>
+        </div>  
+      </div>
+
+      <div class="row">
+        <div class="col-12"> 
+          <div class="table-wrapper">
+            <table class="table table-striped">
+              <thead>
+                <th width="33.5%">Tanggal Bayar</th>
+                <th>Cicilan Bulan</th>
+                <th class="text-right">Jumlah Bayar</th>
+              </thead>
+
+              <tbody *ngIf="!isLoadData">
+                <tr *ngIf="dataTable.length == 0">
+                  <td colspan="7" class="text-center">
+                    Belum melakukan pembayaran
+                  </td>
+                </tr>
+
+                <tr *ngFor="let item of dataTable">
+                  <td>
+                    {{item.tanggal_terima | date:'d MMM, y, h:mm:ss a'}}
+                  </td>
+                  <td>{{ item.cicilan}}</td>
+                  <td class="text-right">
+                    <b>Rp {{ item.total_bayar | number:'1.0-2' }}</b>
+                  </td>
+                </tr>
+                <tr *ngIf="total_pembayaran!=0">
+                  <td><b>Total yang sudah dibayar</b></td>
+                  <td></td>
+                  <td class="text-right">
+                    <b>Rp {{ total_pembayaran | number:'1.0-2' }}</b>
+                  </td>
+                </tr>
+                <tr *ngIf="total_pembayaran!=0">
+                  <td><b>Biaya Kurang</b></td>
+                  <td></td>
+                  <td class="text-right">
+                    <b>Rp {{ sisa_biaya_kurang | number:'1.0-2' }}</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">      
+      <div class="row">
+        <div class="col-xl-12 text-center">
+          <h5>
+            "Terima Kasih"
+          </h5>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>

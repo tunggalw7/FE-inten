@@ -1,0 +1,42 @@
+<div class="modal-wrapper medium">
+  <div class="modal-header">
+    <h5 class="title">{{type}} Universitas</h5>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddEditForm">
+        <div class="form-control-group">
+          <label class="label">
+            Universitas
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="nama_universitas" 
+                name="nama_universitas"
+                placeholder="Enter jurusan universitas"
+                fieldSize="large"
+                [status]="submitted && f.nama_universitas.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.nama_universitas.errors">
+            <p class="caption status-danger" *ngIf="f.nama_universitas.errors.required">
+              Please enter universitas.
+            </p>
+          </ng-container>
+        </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-primary" 
+        type="submit"
+        (click)="onSubmit(AddEditForm.value)"
+        [nbSpinner]="submitLoading" 
+        [disabled]="submitLoading">
+        {{ submitLoading ? "" : action }}
+      </button>
+    </div>
+  </div>
+</div>

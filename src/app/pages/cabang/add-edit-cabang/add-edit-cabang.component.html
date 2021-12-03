@@ -1,0 +1,63 @@
+<div class="modal-wrapper medium">
+  <div class="modal-header">
+    <h5 class="title">{{type}} Cabang</h5>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <nb-icon icon="close-outline"></nb-icon>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="AddEditForm">
+        <div class="form-control-group">
+          <label class="label">
+            Cabang
+            <span class="caption status-danger">*</span>
+          </label>
+          <input nbInput
+                fullWidth
+                formControlName="nama_cabang" 
+                name="nama_cabang"
+                placeholder="Enter jurusan cabang"
+                fieldSize="large"
+                [status]="submitted && f.nama_cabang.errors  ? 'danger' : 'basic'"
+          >
+          <ng-container *ngIf="submitted && f.nama_cabang.errors">
+            <p class="caption status-danger" *ngIf="f.nama_cabang.errors.required">
+              Please enter cabang.
+            </p>
+          </ng-container>
+        </div>
+        <div class="form-control-group">
+          <label class="label">
+            Kelas
+            <span class="caption status-danger">*</span>
+          </label>
+          <nb-select 
+            multiple  
+            class="form-control" 
+            formControlName="kelas" 
+            placeholder="Select kelas"
+            [(selected)]="selectedKelas">
+            <nb-option *ngFor="let item of listKelas" value="{{item.nama_kelas}}">
+              {{ item.nama_kelas }}
+            </nb-option>
+          </nb-select>   
+          <ng-container *ngIf="submitted && f.kelas.errors">
+            <p class="caption status-danger" *ngIf="f.kelas.errors.required">
+              Please select kelas.
+            </p>
+          </ng-container>   
+        </div>
+    </form> 
+  </div>
+  <div class="modal-footer">
+    <div class="text-right">
+      <button class="btn btn-primary" 
+        type="submit"
+        (click)="onSubmit(AddEditForm.value)"
+        [nbSpinner]="submitLoading" 
+        [disabled]="submitLoading">
+        {{ submitLoading ? "" : action }}
+      </button>
+    </div>
+  </div>
+</div>

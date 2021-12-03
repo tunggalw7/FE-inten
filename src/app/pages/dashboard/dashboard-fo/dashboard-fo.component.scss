@@ -1,0 +1,148 @@
+label{
+    font-weight: bold;
+}
+.title{
+    padding-top: 2em;
+    padding-bottom: 5em;
+    text-align: center;
+    font-weight: bold;
+}
+.filter-bar{    
+    margin-bottom: 0;
+}
+.filter-area{
+    display: flex;
+    .form-control-group{
+        width: 15em;
+        margin: 0;
+    }
+}
+
+.header-filter{
+    display: flex;
+    justify-content: space-between;
+}
+
+.card{
+    text-align: center;
+    color: nb-theme(color-dark-primary-300);
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    height: 222px;
+    padding: 1.5rem 0;
+    .label-total{
+      margin: 1em;
+      font-size: 18px;
+      font-weight: bold;
+      color: #5C656B;
+    }
+    h4{
+        font-size: 26px;
+        color: #5C656B;
+    }
+    .icon-wrapper{
+      border-radius: 50%;
+      width: fit-content;
+      margin: auto;
+      nb-icon{    
+        color: #FFF;
+        font-size: 2em;
+        margin: 0.5em;
+      }
+      &.kelas{
+        background-color: #538736;
+      }
+      &.coupons{
+        background-color: #fbb82c;
+      }
+      &.siswa{
+        background-color: #0273e5;
+      }
+      &.earnings{
+        background-color: #fb872c;
+      }
+    }
+}    
+
+nb-card-header.panel{
+    background-color: #ff3d71;
+    .button-panel{
+        display: flex;
+        padding: 0.5em;
+        font-size: 14px;
+    
+        span{
+            padding: 0.5em;            
+            margin: 0 1em;
+            color: #fff;
+            cursor: pointer;
+            &.active{
+                background-color: #f782a1;
+                border-radius: 2px;
+                // border: solid ;
+            }
+        }
+    }
+}
+.icon-badge{    
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+
+nb-card-header{
+    // display: flex;
+    // justify-content: space-between;
+}
+
+.table-wrapper table {    
+    border: solid 1px #D8DADB;
+    thead{
+        th{            
+            border-width: 0 0 1px 0;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 1rem;
+            line-height: 17px;
+            background: transparent;
+            border-bottom: solid 1px #D8DADB;
+            text-align: center;
+            border-right: solid 1px #D8DADB;
+        }
+    }
+    tbody{
+        tr{
+            td{                
+                padding: 1rem;
+                color: #000000;
+                font-size: 14px;
+                border-width: 0 0 1px 0;
+                border-bottom: thin solid #D8DADB;
+                vertical-align: middle !important;
+                border-right: solid 1px #D8DADB;
+                text-align: center;
+            }
+        }
+    }
+}
+
+.flip-icon {
+    position: absolute;
+    right: 0.625rem;
+    top: 1rem;
+    cursor: pointer;
+  }
+
+  ::ng-deep .flipped {
+    .back-container {
+      .flip-icon {
+        transform: scaleX(-1);
+      }
+    }
+
+    .front-container {
+      .flip-icon {
+        display: none;
+      }
+    }
+  }

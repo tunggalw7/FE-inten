@@ -1,0 +1,149 @@
+<div class="row">  
+  <div class="col-xl-12">
+    <nb-card size="medium">
+      <nb-card-header>
+        Data Absensi Siswa
+      </nb-card-header>
+      <nb-card-body>                
+        <div class="table-wrapper">
+          <table class="table table-striped">
+            <thead>
+              <th></th>
+              <th colspan="2">Juni</th>
+              <th colspan="2">Juli</th>
+              <th colspan="2">Agustus</th>
+              <th colspan="2">September</th>
+              <th colspan="2">Oktober</th>
+              <th colspan="2">November</th>
+              <th colspan="2">Desember</th>
+              <th colspan="2">Januari</th>
+              <th colspan="2">Februari</th>
+              <th colspan="2">Maret</th>
+              <th colspan="2">April</th>
+              <th colspan="2">Mei</th>
+            </thead>
+
+            <tbody>
+              <tr *ngIf="dataAbsensi.length == 0">
+                <td colspan="7" class="text-center">
+                  Belum melakukan pembayaran
+                </td>
+              </tr>
+              <tr>
+                <td>Hadir</td>
+                <td>{{ Juni ? Juni.hadir : '-' }}</td>
+                <td>{{ Juni ? (Juni.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Juli ? Juli.hadir : '-' }}</td>
+                <td>{{ Juli ? (Juli.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Agustus ? Agustus.hadir : '-' }}</td>
+                <td>{{ Agustus ? (Agustus.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ September ? September.hadir : '-' }}</td>
+                <td>{{ September ? (September.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Oktober ? Oktober.hadir : '-' }}</td>
+                <td>{{ Oktober ? (Oktober.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ November ? November.hadir : '-' }}</td>
+                <td>{{ November ? (November.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Desember ? Desember.hadir : '-' }}</td>
+                <td>{{ Desember ? (Desember.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Januari ? Januari.hadir : '-' }}</td>
+                <td>{{ Januari ? (Januari.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Februari ? Februari.hadir : '-' }}</td>
+                <td>{{ Februari ? (Februari.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Maret ? Maret.hadir : '-' }}</td>
+                <td>{{ Maret ? (Maret.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ April ? April.hadir : '-' }}</td>
+                <td>{{ April ? (April.persentase | number: '1.0-0') + '%' : '-' }}</td>
+                <td>{{ Mei ? Mei.hadir : '-' }}</td>
+                <td>{{ Mei ? (Mei.persentase | number: '1.0-0') + '%' : '-' }}</td>
+              </tr>
+          
+              <tr>
+                <td>Alpha</td>
+                <td>{{ Juni ? Juni.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Juli ? Juli.absen : '-' }}</td>
+                <td></td>
+                <td>{{ Agustus ? Agustus.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ September ? September.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Oktober ? Oktober.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ November ? November.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Desember ? Desember.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Januari ? Januari.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Februari ? Februari.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Maret ? Maret.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ April ? April.absen : '-' }}</td>
+                <td>-</td>
+                <td>{{ Mei ? Mei.absen : '-' }}</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>Izin</td>
+                <td>{{ Juni ? Juni.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Juli ? Juli.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Agustus ? Agustus.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ September ? September.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Oktober ? Oktober.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ November ? November.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Desember ? Desember.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Januari ? Januari.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Februari ? Februari.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Maret ? Maret.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ April ? April.izin : '-' }}</td>
+                <td>-</td>
+                <td>{{ Mei ? Mei.izin : '-' }}</td>
+                <td>-</td>
+              </tr>
+
+              <tr>
+                <td>Sakit</td>
+                <td>{{ Juni ? Juni.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Juli ? Juli.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Agustus ? Agustus.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ September ? September.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Oktober ? Oktober.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ November ? November.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Desember ? Desember.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Januari ? Januari.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Februari ? Februari.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Maret ? Maret.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ April ? April.sakit : '-' }}</td>
+                <td>-</td>
+                <td>{{ Mei ? Mei.sakit : '-' }}</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </nb-card-body>
+    </nb-card> 
+  </div>
+</div>
